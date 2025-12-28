@@ -1,17 +1,50 @@
 ---
 // OAuth callback handler for Decap CMS GitHub authentication
-// Use Astro.url.searchParams directly - this should work even if host is wrong
-// The search params are preserved in Astro.url even when the host is incorrect
-const code = Astro.url.searchParams.get('code');
-const state = Astro.url.searchParams.get('state');
-const error = Astro.url.searchParams.get('error');
+// Cloudflare Pages might not pass query params correctly, so try multiple methods
+let code: string | null = null;
+let state: string | null = null;
+let error: string | null = null;
+let allParams: Record<string, string> = {};
 
-// Log all query parameters for debugging
-const allParams = Object.fromEntries(Astro.url.searchParams.entries());
+// Method 1: Try Astro.url.searchParams
+if (Astro.url.searchParams.has('code')) {
+  code = Astro.url.searchParams.get('code');
+  state = Astro.url.searchParams.get('state');
+  error = Astro.url.searchParams.get('error');
+  allParams = Object.fromEntries(Astro.url.searchParams.entries());
+}
+
+// Method 2: If that didn't work, try parsing from request URL manually
+if (!code) {
+  try {
+    const requestUrlStr = Astro.request.url;
+    const urlObj = new URL(requestUrlStr);
+    code = urlObj.searchParams.get('code');
+    state = urlObj.searchParams.get('state');
+    error = urlObj.searchParams.get('error');
+    allParams = Object.fromEntries(urlObj.searchParams.entries());
+  } catch (e) {
+    console.error('Error parsing request URL:', e);
+  }
+}
+
+// Method 3: Try getting from the raw URL string
+if (!code && Astro.request.url.includes('?')) {
+  const queryString = Astro.request.url.split('?')[1]?.split('#')[0] || '';
+  const params = new URLSearchParams(queryString);
+  code = params.get('code');
+  state = params.get('state');
+  error = params.get('error');
+  allParams = Object.fromEntries(params.entries());
+}
+
+// Log for debugging
 console.log('Callback received with params:', allParams);
+console.log('Code found:', code);
 console.log('Astro.url.search:', Astro.url.search);
 console.log('Astro.url.toString():', Astro.url.toString());
 console.log('Astro.request.url:', Astro.request.url);
+console.log('Request URL includes ?:', Astro.request.url.includes('?'));
 
 const clientId = import.meta.env.GITHUB_CLIENT_ID;
 const clientSecret = import.meta.env.GITHUB_CLIENT_SECRET;
@@ -95,7 +128,9 @@ if (!code) {
   <p>Astro.url.search: ${Astro.url.search}</p>
   <p>Astro.url.toString(): ${Astro.url.toString()}</p>
   <p>Astro.request.url: ${Astro.request.url}</p>
-  <p>All search params: ${JSON.stringify(Object.fromEntries(Astro.url.searchParams.entries()))}</p>
+  <p>Request URL has ?: ${Astro.request.url.includes('?')}</p>
+  <p>All search params: ${JSON.stringify(allParams)}</p>
+  <p>Code value: ${code || 'null'}</p>
   <p>Please try logging in again.</p>
 </body>
 </html>
