@@ -43,6 +43,31 @@ authUrl.searchParams.set('redirect_uri', redirectUri);
 authUrl.searchParams.set('state', state);
 authUrl.searchParams.set('scope', 'repo');
 
-return Astro.redirect(authUrl.toString(), 302);
+// Return HTML with immediate JavaScript redirect for faster navigation
+// This is faster than server-side redirect, especially in popup windows
+const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=${authUrl.toString()}">
+  <title>Redirecting to GitHub...</title>
+  <script>
+    // Immediate redirect - no delay
+    window.location.replace(${JSON.stringify(authUrl.toString())});
+  </script>
+</head>
+<body>
+  <p>Redirecting to GitHub...</p>
+  <p>If you are not redirected, <a href="${authUrl.toString()}">click here</a>.</p>
+</body>
+</html>`;
+
+return new Response(html, {
+  status: 200,
+  headers: {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+  },
+});
 ---
 
