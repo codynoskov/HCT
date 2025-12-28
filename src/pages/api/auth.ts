@@ -1,6 +1,10 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ request, url }) => {
+  // Log request details for debugging
+  const acceptHeader = request.headers.get('accept') || '';
+  const userAgent = request.headers.get('user-agent') || '';
+  
   const clientId = import.meta.env.GITHUB_CLIENT_ID;
   const baseUrl = import.meta.env.PUBLIC_BASE_URL || url.origin;
   
@@ -56,6 +60,24 @@ PUBLIC_BASE_URL=http://localhost:4321</code></pre>
   authUrl.searchParams.set('state', state);
   authUrl.searchParams.set('scope', 'repo');
 
+  // Check if this is a request that expects HTML (from browser/popup)
+  // vs a fetch request (which might expect JSON)
+  const isHtmlRequest = acceptHeader.includes('text/html') || 
+                        acceptHeader === '' || 
+                        acceptHeader.includes('*/*');
+
+  if (!isHtmlRequest) {
+    // If it's not an HTML request, return JSON with redirect URL
+    return new Response(JSON.stringify({ 
+      auth_url: authUrl.toString() 
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
   // Return HTML page that immediately redirects to GitHub OAuth
   // This is necessary because Decap CMS opens this in a popup and some browsers
   // treat HTTP redirects as downloads in popup contexts
@@ -66,7 +88,14 @@ PUBLIC_BASE_URL=http://localhost:4321</code></pre>
   <meta http-equiv="refresh" content="0; url=${authUrl.toString()}">
   <title>Redirecting to GitHub...</title>
   <script>
-    window.location.replace(${JSON.stringify(authUrl.toString())});
+    // Immediate redirect
+    (function() {
+      try {
+        window.location.replace(${JSON.stringify(authUrl.toString())});
+      } catch(e) {
+        window.location.href = ${JSON.stringify(authUrl.toString())};
+      }
+    })();
   </script>
 </head>
 <body>
@@ -79,9 +108,11 @@ PUBLIC_BASE_URL=http://localhost:4321</code></pre>
     status: 200,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
+      'Content-Disposition': 'inline',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 };
