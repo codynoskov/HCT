@@ -223,16 +223,37 @@ export const GET: APIRoute = async ({ request, url }) => {
     (function() {
       try {
         // Post the token back to Decap CMS
-        const message = 'authorization:github:success:{"token":"${accessToken}","provider":"github"}';
+        // Decap CMS expects this specific message format
+        const tokenData = {
+          token: "${accessToken}",
+          provider: "github"
+        };
+        const message = 'authorization:github:success:' + JSON.stringify(tokenData);
         
-        if (window.opener) {
+        if (window.opener && !window.opener.closed) {
+          // Try posting to the exact origin first
           window.opener.postMessage(message, window.location.origin);
-          // Give it a moment to process, then close
+          
+          // Also try posting to '*' as fallback (some Decap CMS versions need this)
+          window.opener.postMessage(message, '*');
+          
+          // Give Decap CMS time to process the message
           setTimeout(function() {
+            if (!window.opener.closed) {
+              // Try to reload the opener to refresh the auth state
+              try {
+                window.opener.location.reload();
+              } catch (e) {
+                // Cross-origin, can't reload
+              }
+            }
             window.close();
-          }, 100);
+          }, 500);
         } else {
-          // If no opener, redirect to admin page
+          // If no opener, we might be in the same window - store token and redirect
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('netlify-cms-user', JSON.stringify(tokenData));
+          }
           window.location.href = '/admin/';
         }
       } catch (e) {
