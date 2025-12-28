@@ -6,11 +6,57 @@ export const GET: APIRoute = async ({ request, url }) => {
   const error = url.searchParams.get('error');
 
   if (error) {
-    return new Response(`OAuth error: ${error}`, { status: 400 });
+    const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>OAuth Error</h1>
+  <p>${error}</p>
+  <p>Please try again.</p>
+</body>
+</html>
+    `;
+    return new Response(errorHtml, { 
+      status: 400,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
   }
 
   if (!code) {
-    return new Response('Missing authorization code', { status: 400 });
+    const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>OAuth Error</h1>
+  <p>Missing authorization code</p>
+  <p>Please try logging in again.</p>
+</body>
+</html>
+    `;
+    return new Response(errorHtml, { 
+      status: 400,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
   }
 
   const clientId = import.meta.env.GITHUB_CLIENT_ID;
@@ -19,7 +65,30 @@ export const GET: APIRoute = async ({ request, url }) => {
   const redirectUri = `${baseUrl}/api/callback`;
 
   if (!clientId || !clientSecret) {
-    return new Response('GitHub OAuth credentials are not configured', { status: 500 });
+    const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Configuration Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>Configuration Error</h1>
+  <p>GitHub OAuth credentials are not configured</p>
+  <p>Please configure GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET in your .env file.</p>
+</body>
+</html>
+    `;
+    return new Response(errorHtml, { 
+      status: 500,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
   }
 
   try {
@@ -40,13 +109,59 @@ export const GET: APIRoute = async ({ request, url }) => {
 
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
-      return new Response(`Failed to exchange code for token: ${errorText}`, { status: 500 });
+      const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>OAuth Error</h1>
+  <p>Failed to exchange code for token: ${errorText}</p>
+  <p>Please try logging in again.</p>
+</body>
+</html>
+      `;
+      return new Response(errorHtml, { 
+        status: 500,
+        headers: {
+          'Content-Type': 'text/html',
+        },
+      });
     }
 
     const tokenData = await tokenResponse.json();
     
     if (tokenData.error) {
-      return new Response(`OAuth error: ${tokenData.error_description || tokenData.error}`, { status: 400 });
+      const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>OAuth Error</h1>
+  <p>${tokenData.error_description || tokenData.error}</p>
+  <p>Please try logging in again.</p>
+</body>
+</html>
+      `;
+      return new Response(errorHtml, { 
+        status: 400,
+        headers: {
+          'Content-Type': 'text/html',
+        },
+      });
     }
 
     const accessToken = tokenData.access_token;
@@ -81,7 +196,30 @@ export const GET: APIRoute = async ({ request, url }) => {
     });
   } catch (error) {
     console.error('OAuth callback error:', error);
-    return new Response(`OAuth callback error: ${error instanceof Error ? error.message : 'Unknown error'}`, { status: 500 });
+    const errorHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Error</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    h1 { color: #d32f2f; }
+  </style>
+</head>
+<body>
+  <h1>OAuth Error</h1>
+  <p>${error instanceof Error ? error.message : 'Unknown error'}</p>
+  <p>Please try logging in again.</p>
+</body>
+</html>
+    `;
+    return new Response(errorHtml, { 
+      status: 500,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
   }
 };
 
