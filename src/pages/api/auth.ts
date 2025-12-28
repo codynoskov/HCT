@@ -56,8 +56,33 @@ PUBLIC_BASE_URL=http://localhost:4321</code></pre>
   authUrl.searchParams.set('state', state);
   authUrl.searchParams.set('scope', 'repo');
 
-  // Redirect directly to GitHub OAuth
-  // Decap CMS expects a redirect response
-  return Response.redirect(authUrl.toString(), 302);
+  // Return HTML page that immediately redirects to GitHub OAuth
+  // This is necessary because Decap CMS opens this in a popup and some browsers
+  // treat HTTP redirects as downloads in popup contexts
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=${authUrl.toString()}">
+  <title>Redirecting to GitHub...</title>
+  <script>
+    window.location.replace(${JSON.stringify(authUrl.toString())});
+  </script>
+</head>
+<body>
+  <p>Redirecting to GitHub...</p>
+  <p>If you are not redirected, <a href="${authUrl.toString()}">click here</a>.</p>
+</body>
+</html>`;
+
+  return new Response(html, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+  });
 };
 
