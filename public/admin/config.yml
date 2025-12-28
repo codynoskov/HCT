@@ -5,6 +5,8 @@ backend:
   base_url: https://hct-ana.pages.dev
   auth_endpoint: /api/auth
 
+site_url: https://hct-ana.pages.dev
+
 media_folder: "src/assets/images" # Location where files will be stored in the repo
 public_folder: "/images" # The src attribute for uploaded media
 collections:
