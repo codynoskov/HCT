@@ -1,31 +1,17 @@
 ---
 // OAuth callback handler for Decap CMS GitHub authentication
-// Get the actual request URL - try multiple methods for Cloudflare compatibility
-let actualUrl: URL;
-try {
-  // First try: Use the request URL directly
-  actualUrl = new URL(Astro.request.url);
-} catch (e) {
-  // Fallback: Construct from headers and Astro.url
-  const host = Astro.request.headers.get('host') || Astro.url.host;
-  const protocol = Astro.request.headers.get('x-forwarded-proto') || 
-                   Astro.request.headers.get('x-forwarded-scheme') || 
-                   'https';
-  const pathWithQuery = Astro.url.pathname + Astro.url.search;
-  actualUrl = new URL(pathWithQuery, `${protocol}://${host}`);
-}
-
-// Now get parameters from the actual URL
-const code = actualUrl.searchParams.get('code');
-const state = actualUrl.searchParams.get('state');
-const error = actualUrl.searchParams.get('error');
+// Use Astro.url.searchParams directly - this should work even if host is wrong
+// The search params are preserved in Astro.url even when the host is incorrect
+const code = Astro.url.searchParams.get('code');
+const state = Astro.url.searchParams.get('state');
+const error = Astro.url.searchParams.get('error');
 
 // Log all query parameters for debugging
-const allParams = Object.fromEntries(actualUrl.searchParams.entries());
+const allParams = Object.fromEntries(Astro.url.searchParams.entries());
 console.log('Callback received with params:', allParams);
-console.log('Actual URL:', actualUrl.toString());
+console.log('Astro.url.search:', Astro.url.search);
+console.log('Astro.url.toString():', Astro.url.toString());
 console.log('Astro.request.url:', Astro.request.url);
-console.log('Astro.url:', Astro.url.toString());
 
 const clientId = import.meta.env.GITHUB_CLIENT_ID;
 const clientSecret = import.meta.env.GITHUB_CLIENT_SECRET;
@@ -106,9 +92,10 @@ if (!code) {
   <p>Missing authorization code</p>
   <p>Received parameters:</p>
   <pre>${debugInfo}</pre>
-  <p>Actual URL: ${actualUrl.toString()}</p>
+  <p>Astro.url.search: ${Astro.url.search}</p>
+  <p>Astro.url.toString(): ${Astro.url.toString()}</p>
   <p>Astro.request.url: ${Astro.request.url}</p>
-  <p>Astro.url: ${Astro.url.toString()}</p>
+  <p>All search params: ${JSON.stringify(Object.fromEntries(Astro.url.searchParams.entries()))}</p>
   <p>Please try logging in again.</p>
 </body>
 </html>
