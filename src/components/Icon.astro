@@ -1,7 +1,23 @@
 ---
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+// Import SVGs from pixelarticons package using Vite's glob
+// This works with Cloudflare because Vite bundles them at build time
+const iconModules = import.meta.glob('/node_modules/pixelarticons/svg/*.svg', { 
+  eager: true,
+  query: '?raw',
+  import: 'default'
+});
+
+// Create a map of icon names to their SVG content
+const iconMap: Record<string, string> = {};
+for (const path in iconModules) {
+  // Extract icon name from path like "/node_modules/pixelarticons/svg/menu.svg"
+  const iconName = path.replace(/^.*\//, '').replace(/\.svg.*$/, '');
+  const moduleContent = iconModules[path];
+  const svgContent = typeof moduleContent === 'string' ? moduleContent : '';
+  if (svgContent) {
+    iconMap[iconName] = svgContent;
+  }
+}
 
 interface Props {
   name: string;
@@ -14,22 +30,8 @@ const { name, size = 24, class: className = "" } = Astro.props;
 // Ensure the icon name doesn't have path or extension
 const iconName = name.replace(/\.svg$/, "").replace(/^.*\//, "");
 
-// Get the current file's directory
-const currentDir = dirname(fileURLToPath(import.meta.url));
-// Path to the icon file relative to this component
-const iconPath = join(currentDir, '..', 'assets', 'icons', `${iconName}.svg`);
-
-// Try to read the SVG file
-let iconSvg: string | null = null;
-try {
-  const svgContent = readFileSync(iconPath, 'utf-8');
-  // Ensure path elements use currentColor (SVG wrapper should keep fill="none")
-  iconSvg = svgContent.replace(/<path([^>]*?)fill="[^"]*"([^>]*?)>/g, '<path$1fill="currentColor"$2>');
-  // Also handle paths without explicit fill attribute
-  iconSvg = iconSvg.replace(/<path((?![^>]*fill=)[^>]*)>/g, '<path$1 fill="currentColor">');
-} catch (error) {
-  // Icon not found - will show error placeholder
-}
+// Get the SVG content from the map
+const iconSvg: string | null = iconMap[iconName] || null;
 ---
 
 {iconSvg ? (
