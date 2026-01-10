@@ -1,0 +1,102 @@
+---
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) => currentPath === path || currentPath.startsWith(path + '/');
+---
+
+<nav class="design-system-nav" role="navigation">
+  <a 
+    href="/design-system/tokens" 
+    class={`nav-link ${isActive('/design-system/tokens') ? 'active' : ''}`}
+  >
+    Tokens
+  </a>
+  <a 
+    href="/design-system/typography" 
+    class={`nav-link ${isActive('/design-system/typography') ? 'active' : ''}`}
+  >
+    Typography
+  </a>
+  <a 
+    href="/design-system/icons" 
+    class={`nav-link ${isActive('/design-system/icons') ? 'active' : ''}`}
+  >
+    Icons
+  </a>
+  <a 
+    href="/design-system/layout" 
+    class={`nav-link ${isActive('/design-system/layout') ? 'active' : ''}`}
+  >
+    Layout
+  </a>
+  <a 
+    href="/design-system/components" 
+    class={`nav-link ${isActive('/design-system/components') ? 'active' : ''}`}
+  >
+    Components
+  </a>
+</nav>
+
+<style>
+  .design-system-nav {
+    display: flex;
+    gap: var(--spacing-core-500-md);
+    margin-bottom: var(--spacing-core-1000-md);
+    border-bottom: 2px solid var(--color-neutral-200);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .design-system-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    font: var(--typography-body-md);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-core-700-md) var(--spacing-core-800-md);
+    border: none;
+    background: transparent;
+    color: var(--color-neutral-600);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  .nav-link.active {
+    color: var(--color-primary-700);
+    border-bottom-color: var(--color-primary-700);
+  }
+
+  .nav-link:focus {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .design-system-nav {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+
+    .nav-link {
+      padding: var(--spacing-core-600-md) var(--spacing-core-700-md);
+      font-size: var(--font-size-text-small);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .design-system-nav {
+      gap: var(--spacing-core-300-md);
+    }
+
+    .nav-link {
+      padding: var(--spacing-core-500-md) var(--spacing-core-600-md);
+    }
+  }
+</style>

@@ -1,0 +1,619 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemNav from '../../components/DesignSystemNav.astro';
+---
+
+<Layout>
+  <div class="design-system">
+    <header class="design-system-header">
+      <h1>Design System</h1>
+      <p class="body-lg">A comprehensive overview of design tokens, typography, icons, and components</p>
+    </header>
+
+    <DesignSystemNav />
+
+    <main class="design-system-content">
+      <!-- Colors Section -->
+      <div class="subsection">
+        <h2>Colors</h2>
+        
+        <div class="color-section">
+          <h3>Primary Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-50);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">50</span>
+                <span class="color-value">#f3fafa</span>
+                <code class="color-token">--color-primary-50</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-100);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">100</span>
+                <span class="color-value">#e6f1f1</span>
+                <code class="color-token">--color-primary-100</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">200</span>
+                <span class="color-value">#d3e2e2</span>
+                <code class="color-token">--color-primary-200</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-300);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">300</span>
+                <span class="color-value">#b0c2c2</span>
+                <code class="color-token">--color-primary-300</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-400);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">400</span>
+                <span class="color-value">#8aa5a5</span>
+                <code class="color-token">--color-primary-400</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-500);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">500</span>
+                <span class="color-value">#6c8787</span>
+                <code class="color-token">--color-primary-500</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-600);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">600</span>
+                <span class="color-value">#506a6a</span>
+                <code class="color-token">--color-primary-600</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-700);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">700</span>
+                <span class="color-value">#354e4e</span>
+                <code class="color-token">--color-primary-700</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-800);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">800</span>
+                <span class="color-value">#1b3333</span>
+                <code class="color-token">--color-primary-800</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-900);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">900</span>
+                <span class="color-value">#0f2727</span>
+                <code class="color-token">--color-primary-900</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-primary-950);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">950</span>
+                <span class="color-value">#041b1b</span>
+                <code class="color-token">--color-primary-950</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-section">
+          <h3>Accent Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-50);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">50</span>
+                <span class="color-value">#fff4f8</span>
+                <code class="color-token">--color-accent-50</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-100);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">100</span>
+                <span class="color-value">#ffe5ef</span>
+                <code class="color-token">--color-accent-100</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">200</span>
+                <span class="color-value">#fccee0</span>
+                <code class="color-token">--color-accent-200</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-300);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">300</span>
+                <span class="color-value">#eda1c1</span>
+                <code class="color-token">--color-accent-300</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-400);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">400</span>
+                <span class="color-value">#d976a3</span>
+                <code class="color-token">--color-accent-400</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-500);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">500</span>
+                <span class="color-value">#b55e75</span>
+                <code class="color-token">--color-accent-500</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-600);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">600</span>
+                <span class="color-value">#954059</span>
+                <code class="color-token">--color-accent-600</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-700);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">700</span>
+                <span class="color-value">#75223e</span>
+                <code class="color-token">--color-accent-700</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-800);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">800</span>
+                <span class="color-value">#510b26</span>
+                <code class="color-token">--color-accent-800</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-900);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">900</span>
+                <span class="color-value">#3e071b</span>
+                <code class="color-token">--color-accent-900</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-accent-950);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">950</span>
+                <span class="color-value">#2b0311</span>
+                <code class="color-token">--color-accent-950</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-section">
+          <h3>Neutral Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch" style="border: 1px solid var(--color-neutral-200);">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-0); border-bottom: 1px solid var(--color-neutral-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">0</span>
+                <span class="color-value">#ffffff</span>
+                <code class="color-token">--color-neutral-0</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-50);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">50</span>
+                <span class="color-value">#f8f8f8</span>
+                <code class="color-token">--color-neutral-50</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-100);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">100</span>
+                <span class="color-value">#eeeeee</span>
+                <code class="color-token">--color-neutral-100</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">200</span>
+                <span class="color-value">#dedede</span>
+                <code class="color-token">--color-neutral-200</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-300);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">300</span>
+                <span class="color-value">#bebebe</span>
+                <code class="color-token">--color-neutral-300</code>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-400);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">400</span>
+                <span class="color-value">#9e9e9e</span>
+                <code class="color-token">--color-neutral-400</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-500);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">500</span>
+                <span class="color-value">#808080</span>
+                <code class="color-token">--color-neutral-500</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-600);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">600</span>
+                <span class="color-value">#6f6f6f</span>
+                <code class="color-token">--color-neutral-600</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-900);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">900</span>
+                <span class="color-value">#262626</span>
+                <code class="color-token">--color-neutral-900</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-950);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">950</span>
+                <span class="color-value">#121212</span>
+                <code class="color-token">--color-neutral-950</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-neutral-1000);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">1000</span>
+                <span class="color-value">#000000</span>
+                <code class="color-token">--color-neutral-1000</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-section">
+          <h3>Semantic Colors</h3>
+          <div class="color-grid semantic-grid">
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-text);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">Text</span>
+                <span class="color-value">#000000</span>
+                <code class="color-token">--color-text</code>
+              </div>
+            </div>
+            <div class="color-swatch" style="border: 1px solid var(--color-neutral-200);">
+              <div class="color-swatch-color" style="background-color: var(--color-text-inverse); border-bottom: 1px solid var(--color-neutral-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">Text Inverse</span>
+                <span class="color-value">#ffffff</span>
+                <code class="color-token">--color-text-inverse</code>
+              </div>
+            </div>
+            <div class="color-swatch" style="border: 1px solid var(--color-neutral-200);">
+              <div class="color-swatch-color" style="background-color: var(--color-background); border-bottom: 1px solid var(--color-neutral-200);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">Background</span>
+                <span class="color-value">#ffffff</span>
+                <code class="color-token">--color-background</code>
+              </div>
+            </div>
+            <div class="color-swatch dark-text">
+              <div class="color-swatch-color" style="background-color: var(--color-warning-500);"></div>
+              <div class="color-swatch-info">
+                <span class="color-label">Warning</span>
+                <span class="color-value">#f3b200</span>
+                <code class="color-token">--color-warning-500</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spacing Section -->
+      <div class="subsection">
+        <h2>Spacing Scale</h2>
+        <div class="spacing-showcase">
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-100-md);"></div>
+            <code>--spacing-core-100-md</code>
+            <span>1px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-300-md);"></div>
+            <code>--spacing-core-300-md</code>
+            <span>4px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-500-md);"></div>
+            <code>--spacing-core-500-md</code>
+            <span>8px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-600-md);"></div>
+            <code>--spacing-core-600-md</code>
+            <span>12px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-700-md);"></div>
+            <code>--spacing-core-700-md</code>
+            <span>16px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-800-md);"></div>
+            <code>--spacing-core-800-md</code>
+            <span>24px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-900-md);"></div>
+            <code>--spacing-core-900-md</code>
+            <span>36px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-1000-md);"></div>
+            <code>--spacing-core-1000-md</code>
+            <span>52px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-1100-md);"></div>
+            <code>--spacing-core-1100-md</code>
+            <span>72px</span>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-visual" style="width: var(--spacing-core-1200-md);"></div>
+            <code>--spacing-core-1200-md</code>
+            <span>96px</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .design-system {
+    max-width: var(--container-max-width-xlarge);
+    margin: 0 auto;
+    padding: var(--spacing-core-1000-md) var(--spacing-page-padding);
+    overflow: hidden;
+  }
+
+  .design-system-header {
+    margin-bottom: var(--spacing-core-1000-md);
+    text-align: center;
+  }
+
+  .design-system-header h1 {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .design-system-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section-large);
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-1000-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .subsection h2 {
+    border-bottom: var(--border-width-divider) solid var(--color-border);
+    padding-bottom: var(--spacing-core-700-md);
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .subsection h3 {
+    margin-bottom: var(--spacing-core-700-md);
+    font-size: var(--font-size-heading-4);
+  }
+
+  /* Color Sections */
+  .color-section {
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .color-section h3 {
+    margin-bottom: var(--spacing-core-800-md);
+    font-size: var(--font-size-heading-5);
+  }
+
+  /* Color Swatches */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-core-700-md);
+  }
+
+  .color-grid.semantic-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .color-swatch {
+    position: relative;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--color-background);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .color-swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-swatch-color {
+    width: 100%;
+    height: 120px;
+  }
+
+  .color-swatch-info {
+    padding: var(--spacing-core-700-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-300-md);
+    background: var(--color-background);
+  }
+
+  .color-label {
+    font: var(--typography-body-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .color-value {
+    font: var(--typography-body-sm);
+    color: var(--color-neutral-600);
+    font-family: monospace;
+  }
+
+  .color-token {
+    font-family: monospace;
+    font-size: var(--font-size-text-tiny);
+    color: var(--color-neutral-500);
+    background-color: var(--color-neutral-50);
+    padding: var(--spacing-core-300-md) var(--spacing-core-500-md);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .color-swatch.dark-text .color-label,
+  .color-swatch.dark-text .color-value {
+    color: var(--color-text-inverse);
+  }
+
+  .color-swatch.dark-text .color-token {
+    color: var(--color-text-inverse);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Spacing Showcase */
+  .spacing-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-600-md);
+  }
+
+  .spacing-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-core-700-md);
+    padding: var(--spacing-core-700-md);
+    border: var(--border-width-divider) solid var(--color-neutral-200);
+    border-radius: 4px;
+    background: var(--color-background);
+  }
+
+  .spacing-visual {
+    height: 40px;
+    background-color: var(--color-primary-600);
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+
+  .spacing-item code {
+    font-family: monospace;
+    font-size: var(--font-size-text-small);
+    color: var(--color-neutral-600);
+    background-color: var(--color-neutral-50);
+    padding: var(--spacing-core-300-md) var(--spacing-core-500-md);
+    border-radius: 2px;
+    min-width: 200px;
+  }
+
+  .spacing-item span {
+    font: var(--typography-body-sm);
+    color: var(--color-neutral-600);
+    margin-left: auto;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .color-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .design-system {
+      padding: var(--spacing-core-800-md) var(--spacing-core-700-md);
+    }
+
+    .design-system-header {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+
+    .color-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--spacing-core-600-md);
+    }
+
+    .color-grid.semantic-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .color-swatch-color {
+      height: 100px;
+    }
+
+    .color-swatch-info {
+      padding: var(--spacing-core-600-md);
+    }
+
+    .spacing-item {
+      flex-wrap: wrap;
+    }
+
+    .spacing-item code {
+      min-width: auto;
+      flex: 1;
+    }
+
+    .spacing-item span {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .color-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

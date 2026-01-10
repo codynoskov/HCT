@@ -1,11 +1,49 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Divider from '../components/Divider.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import ReviewsSection from '../components/sections/ReviewsSection.astro';
+import InstagramPromoSection from '../components/sections/InstagramPromoSection.astro';
+import StudioSection from '../components/sections/StudioSection.astro';
+import WalkInTattoosSection from '../components/sections/WalkInTattoosSection.astro';
+import StylesSection from '../components/sections/StylesSection.astro';
+import ValuesSection from '../components/sections/ValuesSection.astro';
+import ArtistsSection from '../components/sections/ArtistsSection.astro';
 ---
 
 <Layout>
-	<Welcome />
+	<Header />
+	<main>
+		<HeroSection />
+		<ReviewsSection />
+		<Divider />
+		<InstagramPromoSection />
+		<Divider />
+		<StudioSection />
+		<Divider />
+		<WalkInTattoosSection />
+		<Divider />
+		<StylesSection />
+		<Divider />
+		<ValuesSection />
+		<Divider />
+		<ArtistsSection />
+		<Divider />
+	</main>
+	<Footer />
 </Layout>
+
+<style>
+	main {
+		width: 100%;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		overflow-x: visible;
+		overflow-y: visible;
+		padding-top: 72px; /* Account for fixed header height */
+	}
+</style>

@@ -1,0 +1,316 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import placeholderImage from '../assets/images/placeholder.png';
+
+interface Props {
+  screen?: "Desktop" | "Mobile";
+  className?: string;
+}
+
+const { screen = "Desktop", className = "" } = Astro.props;
+---
+
+<footer class={`footer footer-${screen.toLowerCase()} ${className}`} data-screen={screen}>
+  <div class="container">
+    <div class="text-block">
+      <h2>In the heart of Friedrichshain</h2>
+      <p class="body-lg">We're located in Berlin's most vibrant creative neighborhood, where art lives in the streets and studios. Easy to reach, impossible to forget.</p>
+    </div>
+    <div class="map-block">
+      <div class="contact-wrapper">
+        <div class="contact-content">
+          <div class="contact-item">
+            <Icon name="mail" size={24} class="icon" />
+            <h6>Email</h6>
+            <p>Reach out anytime with questions</p>
+            <a href="mailto:highcontrasttattoo@gmail.com" class="contact-link">highcontrasttattoo@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <Icon name="device-phone" size={24} class="icon" />
+            <h6>Phone</h6>
+            <p>Call or message us directly</p>
+            <div class="phone-links">
+              <a href="tel:+4917672745645" class="contact-link">+49 176 72745645</a>
+              <span class="separator">|</span>
+              <a href="https://wa.me/4917672745645" class="contact-link">WhatsApp</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <Icon name="home" size={24} class="icon" />
+            <h6>Studio</h6>
+            <p>Schreinerstraße 6, 10247 Berlin, Germany</p>
+          </div>
+        </div>
+        <div class="actions">
+          <Button 
+            type="Primary" 
+            color="Primary" 
+            href="https://maps.google.com/?q=High+Contrast+Tattoo,+Schreinerstraße+6,+10247+Berlin,+Germany" 
+            leadingIcon={false} 
+            trailingIcon={true}
+            trailingIconName="open"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open in Google Maps
+          </Button>
+        </div>
+      </div>
+      <div class="map-image">
+        <img src={placeholderImage.src} alt="Map of High Contrast Tattoo studio location in Berlin Friedrichshain" class="map-placeholder" />
+      </div>
+    </div>
+  </div>
+  <div class={`footer-divider footer-divider-${screen.toLowerCase()}`}></div>
+  <div class="container">
+    <div class="logo-section">
+      <div class="logo-wrapper">
+        <Logo class="logo" />
+      </div>
+      <span class="logo-text">High Contrast Tattoo</span>
+    </div>
+    <nav class="footer-nav">
+      <a href="/studio" class="nav-link">Studio</a>
+      <a href="/artists" class="nav-link">Artists</a>
+      <a href="/styles" class="nav-link">Styles</a>
+      <a href="/impressum" class="nav-link">Impressum</a>
+      <a href="/privacy" class="nav-link">Privacy note</a>
+    </nav>
+    <div class="footer-text">
+      <p class="footer-small">We do not collect any personal data and do not use cookies</p>
+      <p class="footer-copyright">© 2026 High Contrast Tattoo</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    background-color: var(--color-neutral-50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Desktop Footer */
+  .footer-desktop {
+    gap: var(--spacing-core-1100-md);
+    padding: var(--spacing-core-1100-md) 0;
+  }
+
+  /* Mobile Footer */
+  .footer-mobile {
+    gap: var(--spacing-core-900-md);
+    padding: var(--spacing-core-1100-md) 0;
+  }
+
+
+  .text-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    align-items: flex-start;
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .text-block h2 {
+    font: var(--typography-h2);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .body-lg {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-600);
+    margin: 0;
+  }
+
+  .map-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-900-md);
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 416px;
+  }
+
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-500-md);
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary-600);
+  }
+
+  .contact-item h6 {
+    font: var(--typography-h6);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .contact-item p {
+    font: var(--typography-body-md);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .contact-link {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    text-decoration: underline;
+  }
+
+  .phone-links {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .separator {
+    font: var(--typography-body-md);
+    color: var(--color-primary-600);
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: var(--spacing-core-900-md);
+    width: 100%;
+  }
+
+  .map-image {
+    flex: 1;
+    min-width: var(--spacing-core-1500-md);
+    min-height: var(--spacing-core-1500-md);
+    width: 100%;
+    position: relative;
+  }
+
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .footer-divider {
+    height: 1px;
+    width: 100%;
+  }
+
+  .footer-divider-desktop {
+    background-color: var(--color-neutral-200);
+  }
+
+  .footer-divider-mobile {
+    background-color: var(--color-neutral-300);
+  }
+
+  .footer .container:last-of-type {
+    gap: var(--spacing-core-800-md);
+  }
+
+  .footer .container:first-of-type {
+    gap: var(--spacing-core-900-md);
+  }
+
+  .logo-section {
+    display: flex;
+    gap: var(--spacing-core-700-md);
+    align-items: center;
+  }
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scaleY(-1);
+    color: var(--color-primary-900);
+  }
+
+  .logo {
+    width: 16.513px;
+    height: 36px;
+    display: block;
+  }
+
+  .logo-text {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-900);
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-900-md);
+    row-gap: 0;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* nav-link styles are now in tokens.css */
+
+  .footer-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-300-md);
+    align-items: flex-start;
+    width: 100%;
+    font: var(--typography-body-sm);
+    color: var(--color-primary-600);
+  }
+
+  .footer-small {
+    font: var(--typography-body-sm);
+    color: var(--color-primary-600);
+    margin: 0;
+  }
+
+  .footer-copyright {
+    font: var(--typography-body-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .map-block {
+      flex-direction: column;
+    }
+
+    .contact-wrapper {
+      width: 100%;
+    }
+
+    .map-image {
+      width: 100%;
+    }
+  }
+</style>

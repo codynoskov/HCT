@@ -1,0 +1,90 @@
+---
+interface Props {
+  color?: "Primary" | "Accent" | "Neutral";
+  state?: "Default" | "Hover" | "Pressed";
+  className?: string;
+}
+
+const { 
+  color = "Primary", 
+  state = "Default",
+  className = ""
+} = Astro.props;
+---
+
+<span class={`tag tag-${color} ${state === "Hover" ? "tag-hover-state" : ""} ${state === "Pressed" ? "tag-pressed-state" : ""} ${className}`}>
+  <slot />
+</span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--spacing-core-300-md);
+    font: var(--typography-body-sm);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0s ease, color 0s ease;
+  }
+
+  /* Primary - Default */
+  .tag-Primary {
+    background-color: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+
+  /* Primary - Hover */
+  .tag-Primary:hover,
+  .tag-Primary.tag-hover-state {
+    background-color: var(--color-primary-400);
+    color: var(--color-primary-950);
+  }
+
+  /* Primary - Pressed/Active */
+  .tag-Primary:active,
+  .tag-Primary.tag-pressed-state {
+    background-color: var(--color-primary-500);
+    color: var(--color-neutral-1000);
+  }
+
+  /* Accent - Default */
+  .tag-Accent {
+    background-color: var(--color-accent-300);
+    color: var(--color-accent-900);
+  }
+
+  /* Accent - Hover */
+  .tag-Accent:hover,
+  .tag-Accent.tag-hover-state {
+    background-color: var(--color-accent-400);
+    color: var(--color-accent-950);
+  }
+
+  /* Accent - Pressed/Active */
+  .tag-Accent:active,
+  .tag-Accent.tag-pressed-state {
+    background-color: var(--color-accent-500);
+    color: var(--color-neutral-1000);
+  }
+
+  /* Neutral - Default */
+  .tag-Neutral {
+    background-color: var(--color-neutral-300);
+    color: var(--color-neutral-900);
+  }
+
+  /* Neutral - Hover */
+  .tag-Neutral:hover,
+  .tag-Neutral.tag-hover-state {
+    background-color: var(--color-neutral-400);
+    color: var(--color-neutral-950);
+  }
+
+  /* Neutral - Pressed/Active */
+  .tag-Neutral:active,
+  .tag-Neutral.tag-pressed-state {
+    background-color: var(--color-neutral-500);
+    color: var(--color-neutral-1000);
+  }
+</style>

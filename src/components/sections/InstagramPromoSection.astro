@@ -1,0 +1,78 @@
+---
+import Button from '../Button.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+interface Props {
+  title?: string;
+  instagramHandle?: string;
+  instagramUrl?: string;
+  backgroundImage?: string;
+  className?: string;
+}
+
+const {
+  title = "Stay tuned",
+  instagramHandle = "@highcontrasttattoo",
+  instagramUrl = "https://instagram.com/highcontrasttattoo",
+  backgroundImage = placeholderImage.src,
+  className = ""
+} = Astro.props;
+---
+
+<section class={`section banner-section ${className}`}>
+  <div class="banner-background" aria-hidden="true">
+    <div class="banner-bg-fallback"></div>
+    <img 
+      src={backgroundImage} 
+      alt="" 
+      class="banner-bg-image"
+      loading="lazy"
+    />
+  </div>
+  <div class="banner-overlay"></div>
+  <div class="container">
+    <div class="banner-inner">
+      <div class="banner-text">
+        <h2 class="banner-title">{title}</h2>
+        <p class="banner-description">
+          Find our latest updates <a href={instagramUrl} class="instagram-promo-handle" target="_blank" rel="noopener noreferrer">{instagramHandle}</a>
+        </p>
+      </div>
+      
+      <div class="banner-actions">
+        <Button 
+          type="Primary" 
+          color="Primary"
+          href={instagramUrl}
+          leadingIcon={false}
+          trailingIcon={true}
+          trailingIconName="open"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          See on Instagram
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .banner-section :global(.container) {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  .instagram-promo-handle {
+    font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+    text-underline-position: from-font;
+    color: var(--color-primary-900);
+    transition: opacity 0.2s ease;
+  }
+
+  .instagram-promo-handle:hover {
+    opacity: 0.8;
+  }
+</style>

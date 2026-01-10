@@ -1,0 +1,285 @@
+---
+import ArtistImage from '../ArtistImage.astro';
+import Button from '../Button.astro';
+import Logo from '../Logo.astro';
+
+interface Props {
+  name: string;
+  bio: string;
+  fullBio?: string;
+  image?: string;
+  instagram?: string;
+  tags?: string[];
+  bookingHref?: string;
+  className?: string;
+}
+
+const {
+  name,
+  bio,
+  fullBio,
+  image,
+  instagram,
+  tags = [],
+  bookingHref = "/book",
+  className = ""
+} = Astro.props;
+
+// Use fullBio if available, otherwise fall back to bio
+const displayBio = fullBio || bio;
+---
+
+<section class={`artist-page-hero ${className}`} data-top-section>
+  <div class="container">
+    <!-- Logo positioned at container level, at left edge of container -->
+    <div class="logo-background">
+      <Logo width={192} height={418} class="background-logo" />
+    </div>
+    <div class="hero-layout">
+      <!-- Left Column: Artist Info -->
+      <div class="artist-info">
+        <h1 class="artist-name">{name}</h1>
+        <p class="artist-bio">{displayBio}</p>
+        
+        {instagram && (
+          <p class="artist-instagram">
+            <strong>Instagram:</strong>{" "}
+            <a href={`https://instagram.com/${instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer">
+              @{instagram.replace('@', '')}
+            </a>
+          </p>
+        )}
+        
+        {tags.length > 0 && (
+          <p class="artist-styles">
+            <strong>Styles the artist works in:</strong>{" "}
+            <span set:html={tags.map((tag, index) => 
+              `<a href="/styles#${tag.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}" class="artist-style-link">${tag}</a>${index < tags.length - 1 ? ', ' : ''}`
+            ).join('')} />
+          </p>
+        )}
+        
+        <div class="artist-actions">
+          <Button
+            type="Primary"
+            color="Primary"
+            href={bookingHref}
+            leadingIcon={false}
+            trailingIcon={true}
+          >
+            Book a session
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right Column: Artist Photo -->
+      <div class="artist-portrait">
+        <ArtistImage image={image} imageAlt={`${name} - Tattoo Artist at High Contrast Tattoo`} className="hero-artist-image" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .artist-page-hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-primary-50);
+    padding: var(--spacing-core-1100-md) 0 var(--spacing-core-1300-lg) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .artist-page-hero .container {
+    max-width: var(--spacing-core-1900-md); /* 1440px - same as global container */
+    padding: 0 var(--spacing-core-800-md);
+    width: 100%;
+    position: relative;
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-core-900-md);
+    width: 100%;
+    align-items: start;
+  }
+
+  /* Logo positioned at container level, at left edge of container */
+  .logo-background {
+    position: absolute;
+    left: 0;
+    top: calc(-1 * var(--spacing-core-1100-md)); /* Offset to align with section top */
+    pointer-events: none;
+    z-index: 0;
+    color: var(--color-primary-200);
+    transform: scaleY(-1);
+  }
+
+  .logo-background :global(.background-logo) {
+    display: block;
+  }
+
+  /* Left Column: Artist Info */
+  .artist-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .artist-name {
+    font: var(--typography-h1);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .artist-bio {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-900);
+    margin: 0;
+    font-weight: var(--font-weight-light);
+    max-width: 640px;
+  }
+
+  .artist-instagram {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .artist-instagram strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .artist-instagram a {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .artist-instagram a:hover {
+    color: var(--color-primary-700);
+  }
+
+  .artist-styles {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .artist-styles strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .artist-style-link {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .artist-style-link:hover {
+    color: var(--color-primary-700);
+  }
+
+  .artist-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+    padding-top: var(--spacing-core-900-md);
+  }
+
+  /* Right Column: Portrait */
+  .artist-portrait {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Artist image sizing from Figma: 216px × 324px (desktop) */
+  .artist-portrait :global(.hero-artist-image) {
+    height: 324px;
+    width: 216px;
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-layout {
+      gap: var(--spacing-core-800-md);
+    }
+
+    .artist-name {
+      font: var(--typography-h2);
+    }
+
+    .artist-portrait :global(.hero-artist-image) {
+      height: var(--spacing-core-1500-lg);
+      width: calc(var(--spacing-core-1500-lg) * 2 / 3);
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .artist-page-hero {
+      padding: var(--spacing-core-1100-md) 0 var(--spacing-core-1300-lg) 0;
+    }
+
+    .artist-page-hero .container {
+      padding: 0 var(--spacing-core-800-md);
+    }
+
+    .hero-layout {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-core-800-md);
+      align-items: flex-end; /* Right-align content for mobile */
+    }
+
+    .artist-portrait {
+      justify-content: flex-end; /* Right-align image */
+      width: 100%;
+      order: 1;
+    }
+
+    /* Mobile image sizing from Figma: 168px × 252px */
+    .artist-portrait :global(.hero-artist-image) {
+      width: 168px;
+      height: 252px;
+    }
+
+    .artist-info {
+      width: 100%;
+      order: 2;
+      align-items: flex-start; /* Keep text left-aligned */
+    }
+
+    /* Logo stays at container level, same position */
+    .logo-background {
+      left: 0;
+      top: calc(-1 * var(--spacing-core-1100-md));
+    }
+
+    .artist-name {
+      font: var(--typography-h1);
+      width: 100%;
+    }
+
+    .artist-bio {
+      font: var(--typography-body-lg);
+      width: 100%;
+    }
+
+    .artist-actions {
+      padding-top: var(--spacing-core-900-md);
+      width: auto;
+    }
+  }
+</style>

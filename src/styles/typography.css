@@ -1,0 +1,174 @@
+/* Typography Styles - High Contrast Tattoo Website */
+
+/* ============================================
+   FONT LOADING
+   ============================================ */
+
+/* Fonts are loaded via <link> tags in Layout.astro for better Safari compatibility */
+/* Stack Sans Notch - for headlines and buttons */
+/* Stack Sans Text - for body text and links */
+
+/* ============================================
+   BASE TYPOGRAPHY STYLES
+   ============================================ */
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font: var(--typography-body-md);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================
+   HEADING STYLES
+   ============================================ */
+
+h1, .h1 {
+  font: var(--typography-h1);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-800-md) 0;
+}
+
+h2, .h2 {
+  font: var(--typography-h2);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-800-sm) 0;
+}
+
+h3, .h3 {
+  font: var(--typography-h3);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-800-sm) 0;
+}
+
+h4, .h4 {
+  font: var(--typography-h4);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-700-md) 0;
+}
+
+h5, .h5 {
+  font: var(--typography-h5);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-700-md) 0;
+}
+
+h6, .h6 {
+  font: var(--typography-h6);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-core-600-md) 0;
+}
+
+/* ============================================
+   BODY TEXT STYLES
+   ============================================ */
+
+p {
+  font: var(--typography-body-md);
+  margin: 0 0 var(--spacing-core-700-md) 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.body-sm {
+  font: var(--typography-body-sm);
+}
+
+.body-md {
+  font: var(--typography-body-md);
+}
+
+.body-lg {
+  font: var(--typography-body-lg);
+}
+
+/* ============================================
+   LINK STYLES
+   ============================================ */
+
+a, .link {
+  font: var(--typography-body-md);
+  color: var(--color-primary-900);
+  text-decoration: underline;
+  text-underline-position: from-font;
+  letter-spacing: var(--letter-spacing-normal);
+  transition: opacity 0.2s ease;
+}
+
+a:hover, .link:hover {
+  opacity: 0.8;
+}
+
+a:focus, .link:focus {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+
+button, .button {
+  font: var(--typography-button);
+  letter-spacing: var(--letter-spacing-core-100-md);
+}
+
+/* ============================================
+   LIST STYLES
+   ============================================ */
+
+ul, ol {
+  font: var(--typography-body-md);
+  margin: 0 0 var(--spacing-core-700-md) 0;
+  padding-left: var(--spacing-core-800-md);
+}
+
+li {
+  margin-bottom: var(--spacing-core-500-md);
+}
+
+/* ============================================
+   FONT FAMILY UTILITIES
+   ============================================ */
+
+.font-stack-sans { font-family: var(--font-stack-sans); }
+.font-stack-sans-notch { font-family: var(--font-stack-sans-notch); }
+
+/* ============================================
+   TEXT UTILITY CLASSES
+   ============================================ */
+
+.text-tiny { font-size: var(--font-size-text-tiny); }
+.text-small { font-size: var(--font-size-text-small); }
+.text-regular { font-size: var(--font-size-text-regular); }
+.text-medium { font-size: var(--font-size-text-medium); }
+
+.font-light { font-weight: var(--font-weight-light); }
+.font-regular { font-weight: var(--font-weight-regular); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-wide { letter-spacing: var(--letter-spacing-core-100-md); }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }

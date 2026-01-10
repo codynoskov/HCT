@@ -1,0 +1,75 @@
+---
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+interface Props {
+  name: string;
+  size?: number | string;
+  class?: string;
+}
+
+const { name, size = 24, class: className = "" } = Astro.props;
+
+// Ensure the icon name doesn't have path or extension
+const iconName = name.replace(/\.svg$/, "").replace(/^.*\//, "");
+
+// Get the current file's directory
+const currentDir = dirname(fileURLToPath(import.meta.url));
+// Path to the icon file relative to this component
+const iconPath = join(currentDir, '..', 'assets', 'icons', `${iconName}.svg`);
+
+// Try to read the SVG file
+let iconSvg: string | null = null;
+try {
+  const svgContent = readFileSync(iconPath, 'utf-8');
+  // Ensure path elements use currentColor (SVG wrapper should keep fill="none")
+  iconSvg = svgContent.replace(/<path([^>]*?)fill="[^"]*"([^>]*?)>/g, '<path$1fill="currentColor"$2>');
+  // Also handle paths without explicit fill attribute
+  iconSvg = iconSvg.replace(/<path((?![^>]*fill=)[^>]*)>/g, '<path$1 fill="currentColor">');
+} catch (error) {
+  // Icon not found - will show error placeholder
+}
+---
+
+{iconSvg ? (
+  <span 
+    class={`icon icon-${iconName} ${className}`}
+    style={size ? `width: ${typeof size === 'number' ? `${size}px` : size}; height: ${typeof size === 'number' ? `${size}px` : size};` : undefined}
+    set:html={iconSvg}
+  />
+) : (
+  <span 
+    class={`icon icon-${iconName} icon-error ${className}`}
+    style={size ? `width: ${typeof size === 'number' ? `${size}px` : size}; height: ${typeof size === 'number' ? `${size}px` : size};` : undefined}
+    title={`Icon "${name}" not found`}
+  >
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="20" height="20" stroke="currentColor" stroke-width="2"/>
+      <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2"/>
+      <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </span>
+)}
+
+<style>
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: currentColor;
+  }
+
+  .icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .icon-error {
+    opacity: 0.5;
+  }
+</style>

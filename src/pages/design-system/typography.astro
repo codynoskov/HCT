@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemNav from '../../components/DesignSystemNav.astro';
+---
+
+<Layout>
+  <div class="design-system">
+    <header class="design-system-header">
+      <h1>Design System</h1>
+      <p class="body-lg">A comprehensive overview of design tokens, typography, icons, and components</p>
+    </header>
+
+    <DesignSystemNav />
+
+    <main class="design-system-content">
+      <div class="subsection">
+        <h2>Font Families</h2>
+        <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">
+          The design system uses two variants of Stack Sans Text:
+        </p>
+        <div class="typography-showcase">
+          <div class="typography-item">
+            <div style="font-family: var(--font-stack-sans-notch);">
+              <p style="font-size: var(--font-size-heading-3); font-weight: var(--font-weight-regular); margin-bottom: var(--spacing-core-600-md);">
+                Stack Sans Notch
+              </p>
+              <p class="body-sm" style="margin-bottom: 0;">
+                Used for: Headlines (h1-h6) and Buttons<br/>
+                CSS Variable: <code>--font-stack-sans-notch</code><br/>
+                Source: <a href="https://fonts.google.com/specimen/Stack+Sans+Notch" target="_blank" rel="noopener noreferrer">Google Fonts</a>
+              </p>
+            </div>
+          </div>
+          <div class="typography-item">
+            <div style="font-family: var(--font-stack-sans);">
+              <p style="font-size: var(--font-size-heading-3); font-weight: var(--font-weight-regular); margin-bottom: var(--spacing-core-600-md);">
+                Stack Sans Text
+              </p>
+              <p class="body-sm" style="margin-bottom: 0;">
+                Used for: Body text and all other content<br/>
+                CSS Variable: <code>--font-stack-sans</code>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Headings - Stack Sans Notch</h2>
+        <p class="body-sm" style="margin-bottom: var(--spacing-core-700-md);">
+          Headings use Stack Sans Notch font from Google Fonts. Font family: <code>--font-stack-sans-notch</code>
+        </p>
+        <div class="typography-showcase">
+          <div class="typography-item">
+            <h1>Heading 1</h1>
+            <code>--typography-h1</code>
+          </div>
+          <div class="typography-item">
+            <h2>Heading 2</h2>
+            <code>--typography-h2</code>
+          </div>
+          <div class="typography-item">
+            <h3>Heading 3</h3>
+            <code>--typography-h3</code>
+          </div>
+          <div class="typography-item">
+            <h4>Heading 4</h4>
+            <code>--typography-h4</code>
+          </div>
+          <div class="typography-item">
+            <h5>Heading 5</h5>
+            <code>--typography-h5</code>
+          </div>
+          <div class="typography-item">
+            <h6>Heading 6</h6>
+            <code>--typography-h6</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Body Text - Stack Sans Text (without notch)</h2>
+        <p class="body-sm" style="margin-bottom: var(--spacing-core-700-md);">
+          Body text uses Stack Sans Text without notch variant. Font family: <code>--font-stack-sans</code>
+        </p>
+        <div class="typography-showcase">
+          <div class="typography-item">
+            <p class="body-sm">Body Small - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <code>--typography-body-sm</code>
+          </div>
+          <div class="typography-item">
+            <p class="body-md">Body Medium - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <code>--typography-body-md</code>
+          </div>
+          <div class="typography-item">
+            <p class="body-lg">Body Large - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <code>--typography-body-lg</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Links - Stack Sans Text (without notch)</h2>
+        <p class="body-sm" style="margin-bottom: var(--spacing-core-700-md);">
+          Links use Stack Sans Text without notch variant. Font family: <code>--font-stack-sans</code>
+        </p>
+        <div class="typography-showcase">
+          <div class="typography-item">
+            <a href="#" class="link">Stack Sans Text Link</a>
+            <code>--typography-link</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Buttons - Stack Sans Notch</h2>
+        <p class="body-sm" style="margin-bottom: var(--spacing-core-700-md);">
+          Buttons use Stack Sans Notch font from Google Fonts. Font family: <code>--font-stack-sans-notch</code>
+        </p>
+        <div class="typography-showcase">
+          <div class="typography-item">
+            <button style="font: var(--typography-button); padding: var(--spacing-core-600-md) var(--spacing-core-700-md); border: 1px solid var(--color-border); background: transparent;">Stack Sans Notch Button</button>
+            <code>--typography-button</code>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .design-system {
+    max-width: var(--container-max-width-xlarge);
+    margin: 0 auto;
+    padding: var(--spacing-core-1000-md) var(--spacing-page-padding);
+    overflow: hidden;
+  }
+
+  .design-system-header {
+    margin-bottom: var(--spacing-core-1000-md);
+    text-align: center;
+  }
+
+  .design-system-header h1 {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .design-system-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section-large);
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-1000-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .subsection h2 {
+    border-bottom: var(--border-width-divider) solid var(--color-border);
+    padding-bottom: var(--spacing-core-700-md);
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .subsection h3 {
+    margin-bottom: var(--spacing-core-700-md);
+    font-size: var(--font-size-heading-4);
+  }
+
+  /* Typography Showcase */
+  .typography-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+  }
+
+  .typography-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-500-md);
+    padding: var(--spacing-core-800-md);
+    border: var(--border-width-divider) solid var(--color-neutral-200);
+    border-radius: 4px;
+    background: var(--color-background);
+  }
+
+  .typography-item code {
+    font-family: monospace;
+    font-size: var(--font-size-text-small);
+    color: var(--color-neutral-600);
+    background-color: var(--color-neutral-50);
+    padding: var(--spacing-core-300-md) var(--spacing-core-500-md);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .design-system {
+      padding: var(--spacing-core-800-md) var(--spacing-core-700-md);
+    }
+
+    .design-system-header {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+  }
+</style>

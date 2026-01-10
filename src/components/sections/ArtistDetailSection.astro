@@ -1,0 +1,291 @@
+---
+import ArtistImage from '../ArtistImage.astro';
+import Button from '../Button.astro';
+import Gallery from '../Gallery.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  tags?: Array<{
+    text: string;
+    color?: "Primary" | "Accent" | "Neutral";
+  }>;
+}
+
+interface Props {
+  name: string;
+  slug?: string;
+  bio: string;
+  image?: string;
+  instagram?: string;
+  tags?: string[];
+  galleryImages?: GalleryImage[];
+  bookingHref?: string;
+  aboutHref?: string;
+  className?: string;
+}
+
+const {
+  name,
+  slug,
+  bio,
+  image,
+  instagram,
+  tags = [],
+  galleryImages = [],
+  bookingHref = "/book",
+  aboutHref = slug ? `/artists/${slug}` : `#${name.toLowerCase().replace(/\s+/g, '-')}`,
+  className = ""
+} = Astro.props;
+
+// Generate default gallery images if none provided
+const defaultGalleryImages: GalleryImage[] = Array(6).fill(null).map((_, i) => ({
+  src: placeholderImage.src,
+  alt: `${name}'s work ${i + 1}`
+}));
+
+const displayGalleryImages = galleryImages.length > 0 ? galleryImages : defaultGalleryImages;
+---
+
+<section class={`artist-detail-section ${className}`}>
+  <div class="container">
+    <div class="artist-detail-layout">
+      <!-- Left Column: Portrait + Info -->
+      <div class="artist-info-column">
+        <div class="artist-portrait">
+          <ArtistImage image={image} imageAlt={`${name} - Tattoo Artist`} />
+        </div>
+        
+        <div class="artist-info">
+          <h2 class="artist-name">{name}</h2>
+          <p class="artist-bio">{bio}</p>
+          
+          {tags.length > 0 && (
+            <p class="artist-styles">
+              <strong>Styles the artist works in:</strong>{" "}
+              <span set:html={tags.map((tag, index) => 
+                `<a href="#" class="artist-style-link">${tag}</a>${index < tags.length - 1 ? ', ' : ''}`
+              ).join('')} />
+            </p>
+          )}
+          
+          {instagram && (
+            <p class="artist-instagram">
+              <strong>Instagram:</strong>{" "}
+              <a href={`https://instagram.com/${instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer">
+                @{instagram.replace('@', '')}
+              </a>
+            </p>
+          )}
+          
+          <div class="artist-actions">
+            <Button
+              type="Primary"
+              color="Primary"
+              href={bookingHref}
+              leadingIcon={false}
+              trailingIcon={true}
+            >
+              Book a session
+            </Button>
+            <Button
+              type="Secondary"
+              color="Primary"
+              href={aboutHref}
+              leadingIcon={false}
+              trailingIcon={true}
+              className="artist-about-link"
+            >
+              More about the artist
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Gallery -->
+      <div class="artist-gallery-column">
+        <Gallery images={displayGalleryImages} maxVisible={6} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .artist-detail-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-core-1100-md) 0;
+  }
+
+  .artist-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-core-900-md);
+    width: 100%;
+    align-items: start;
+  }
+
+  /* Left Column: Portrait + Info */
+  .artist-info-column {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-800-md);
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .artist-portrait {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .artist-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    flex: 1;
+    min-width: 288px;
+    width: 100%;
+  }
+
+  .artist-name {
+    font: var(--typography-h2);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .artist-bio {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    font-weight: var(--font-weight-light);
+  }
+
+  .artist-styles {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .artist-styles strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .artist-style-link {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .artist-style-link:hover {
+    color: var(--color-primary-700);
+  }
+
+  .artist-instagram {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .artist-instagram strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .artist-instagram a {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+  }
+
+  .artist-instagram a:hover {
+    color: var(--color-primary-700);
+  }
+
+  .artist-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+    padding-top: var(--spacing-core-900-md);
+    width: 100%;
+  }
+
+  .artist-about-link {
+    height: var(--spacing-core-1000-sm);
+    padding: var(--spacing-core-600-md) 0;
+  }
+
+  /* Right Column: Gallery */
+  .artist-gallery-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .artist-detail-layout {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .artist-info-column {
+      max-width: none;
+    }
+
+    .artist-name {
+      font: var(--typography-h3);
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .artist-detail-section {
+      padding: var(--spacing-core-900-md) 0;
+    }
+
+    .artist-detail-layout {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-core-800-md);
+    }
+
+    .artist-info-column {
+      max-width: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--spacing-core-700-md);
+    }
+
+    .artist-portrait {
+      flex-shrink: 0;
+    }
+
+    .artist-info {
+      flex: 1;
+      min-width: 200px;
+      gap: var(--spacing-core-700-md);
+    }
+
+    .artist-name {
+      font: var(--typography-h3);
+    }
+
+    .artist-bio {
+      font: var(--typography-body-md);
+    }
+
+    .artist-actions {
+      width: 100%;
+      padding-top: var(--spacing-core-500-md);
+    }
+
+    .artist-gallery-column {
+      width: 100%;
+    }
+  }
+</style>

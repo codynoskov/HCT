@@ -1,0 +1,124 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  state?: "Empty" | "Checked";
+  focusRing?: boolean;
+  name?: string;
+  value?: string;
+  className?: string;
+}
+
+const { 
+  state = "Empty",
+  focusRing = false,
+  name,
+  value,
+  className = ""
+} = Astro.props;
+---
+
+<button 
+  type="button" 
+  class={`checkbox checkbox-${state} ${focusRing ? "checkbox-focus" : ""} ${className}`}
+  aria-checked={state === "Checked"}
+  role="checkbox"
+>
+  <div class={`checkbox-check ${state === "Checked" ? "checkbox-check-visible" : ""}`} style="color: var(--color-primary-50);">
+    <Icon name="check" size={24} />
+  </div>
+</button>
+
+<style>
+  .checkbox {
+    position: relative;
+    width: var(--font-size-core-800-md);
+    height: var(--font-size-core-800-md);
+    border: var(--border-width-default) solid var(--color-primary-600);
+    background-color: var(--color-primary-50);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-medium);
+  }
+
+  .checkbox-Checked {
+    background-color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+  }
+
+  .checkbox-check {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-50);
+  }
+
+  .checkbox-check-visible {
+    display: flex;
+  }
+
+  .checkbox-check :global(.icon) {
+    width: 24px;
+    height: 24px;
+    color: inherit;
+  }
+
+  .checkbox-check :global(.icon svg) {
+    width: 20px;
+    height: 22px;
+    color: inherit;
+  }
+
+  .checkbox-check :global(.icon svg path) {
+    fill: currentColor;
+  }
+
+  .checkbox:hover {
+    opacity: 0.9;
+  }
+
+  .checkbox:focus-visible {
+    outline: var(--spacing-core-300-md) solid var(--color-primary-300);
+    outline-offset: var(--spacing-core-300-md);
+  }
+
+  .checkbox-focus {
+    outline: var(--spacing-core-300-md) solid var(--color-primary-300);
+    outline-offset: var(--spacing-core-300-md);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.checkbox[role="checkbox"]');
+    
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('click', () => {
+        const isChecked = checkbox.classList.contains('checkbox-Checked');
+        const checkIcon = checkbox.querySelector('.checkbox-check');
+        
+        if (isChecked) {
+          // Uncheck
+          checkbox.classList.remove('checkbox-Checked');
+          checkbox.setAttribute('aria-checked', 'false');
+          if (checkIcon) {
+            checkIcon.classList.remove('checkbox-check-visible');
+          }
+        } else {
+          // Check
+          checkbox.classList.add('checkbox-Checked');
+          checkbox.setAttribute('aria-checked', 'true');
+          if (checkIcon) {
+            checkIcon.classList.add('checkbox-check-visible');
+          }
+        }
+      });
+    });
+  });
+</script>

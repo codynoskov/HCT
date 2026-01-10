@@ -1,0 +1,451 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemNav from '../../components/DesignSystemNav.astro';
+import Button from '../../components/Button.astro';
+import Card from '../../components/Card.astro';
+import InputField from '../../components/InputField.astro';
+import Tag from '../../components/Tag.astro';
+import Checkbox from '../../components/Checkbox.astro';
+import ArtistImage from '../../components/ArtistImage.astro';
+import ImageWithTags from '../../components/ImageWithTags.astro';
+import Gallery from '../../components/Gallery.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+// Figma image URLs from the Gallery design (node-id=531-15401)
+// These images were retrieved from Figma and include both vertical and horizontal orientations
+const figmaTattooImages = [
+  {
+    src: "http://localhost:3845/assets/a695935b2161253488847dd92a522945d6bb60f9.png",
+    alt: "Tattoo artwork 1 - Linework, Traditional & Old School",
+    tags: [
+      { text: "Linework", color: "Primary" },
+      { text: "Traditional & Old School", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/5446e0225866457211707b2e0a78ed747819a73a.png",
+    alt: "Tattoo artwork 2 - Traditional & Old School",
+    tags: [
+      { text: "Traditional & Old School", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/b3633f1001a18109d7f2063f31d2f7fc758af3d5.png",
+    alt: "Tattoo artwork 3 - Linework",
+    tags: [
+      { text: "Linework", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/8a2091eef076fccbb30866f50ce61e677fd33636.png",
+    alt: "Tattoo artwork 4 - Traditional & Old School",
+    tags: [
+      { text: "Traditional & Old School", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/88c9404fca8fa86dd52e02f8fb919bfca9baaec3.png",
+    alt: "Tattoo artwork 5 - Cartoon, Traditional & Old School",
+    tags: [
+      { text: "Cartoon", color: "Primary" },
+      { text: "Traditional & Old School", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/45443369261732539cb940c00ff9bbfb205ab2b0.png",
+    alt: "Tattoo artwork 6 - Created by Nastia Zlotin",
+    tags: [
+      { text: "Created by Nastia Zlotin", color: "Accent" }
+    ]
+  }
+];
+
+// Additional sample images with different aspect ratios
+const additionalSampleImages = [
+  {
+    src: "http://localhost:3845/assets/a695935b2161253488847dd92a522945d6bb60f9.png",
+    alt: "Traditional tattoo - Figure with dagger, rose, and fish",
+    tags: [
+      { text: "Traditional & Old School", color: "Primary" },
+      { text: "Bold", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/5446e0225866457211707b2e0a78ed747819a73a.png",
+    alt: "Traditional tattoo - Arched window with flames",
+    tags: [
+      { text: "Traditional & Old School", color: "Primary" },
+      { text: "Neo-traditional", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/b3633f1001a18109d7f2063f31d2f7fc758af3d5.png",
+    alt: "Japanese-style woman tattoo",
+    tags: [
+      { text: "Japanese", color: "Primary" },
+      { text: "Traditional & Old School", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/8a2091eef076fccbb30866f50ce61e677fd33636.png",
+    alt: "Tattoo artwork 10",
+    tags: [
+      { text: "Fine Line", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/88c9404fca8fa86dd52e02f8fb919bfca9baaec3.png",
+    alt: "Tattoo artwork 11",
+    tags: [
+      { text: "Minimalist", color: "Primary" }
+    ]
+  },
+  {
+    src: "http://localhost:3845/assets/45443369261732539cb940c00ff9bbfb205ab2b0.png",
+    alt: "Tattoo artwork 12",
+    tags: [
+      { text: "Geometric", color: "Primary" }
+    ]
+  }
+];
+---
+
+<Layout>
+  <div class="design-system">
+    <header class="design-system-header">
+      <h1>Design System</h1>
+      <p class="body-lg">A comprehensive overview of design tokens, typography, icons, and components</p>
+    </header>
+
+    <DesignSystemNav />
+
+    <main class="design-system-content">
+      <div class="subsection">
+        <h2>Button Links</h2>
+        <div class="component-examples">
+          <Button type="Primary" color="Primary" href="#example">Primary Button Link</Button>
+          <Button type="Primary" color="Accent" href="#example">Accent Button Link</Button>
+          <Button type="Secondary" color="Primary" href="#example">Secondary Button Link</Button>
+          <Button type="Secondary" color="Accent" href="#example">Secondary Accent Link</Button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Tags</h2>
+        <div class="component-examples">
+          <Tag color="Primary">Primary Tag</Tag>
+          <Tag color="Accent">Accent Tag</Tag>
+          <Tag color="Neutral">Neutral Tag</Tag>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Input Fields</h2>
+        <div class="component-group">
+          <h3>Text Field</h3>
+          <div class="component-examples">
+            <InputField type="Field" state="Empty" label="Empty Field" placeholder="Enter text..." />
+            <InputField type="Field" state="Filled" label="Filled Field" value="Sample text" />
+            <InputField type="Field" state="Error" label="Error Field" errorMessage="This field is required" />
+            <InputField type="Field" state="Empty" label="Required Field" mandatoryField />
+            <InputField type="Field" state="Empty" label="With Focus Ring" focusRing />
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Text Area</h3>
+          <div class="component-examples">
+            <InputField type="Area" state="Empty" label="Text Area" placeholder="Enter message..." />
+            <InputField type="Area" state="Filled" label="Filled Text Area" value="Sample text content" />
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Dropdown</h3>
+          <div class="component-examples">
+            <InputField type="Dropdown" state="Empty" label="Dropdown" placeholder="Select option">
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </InputField>
+            <InputField type="Dropdown" state="Filled" label="Filled Dropdown" value="1">
+              <option value="1" selected>Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </InputField>
+            <InputField type="Dropdown" state="Error" label="Error Dropdown" errorMessage="Please select an option" value="1">
+              <option value="1" selected>Option 1</option>
+              <option value="2">Option 2</option>
+            </InputField>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Checkbox</h2>
+        <div class="component-examples">
+          <div class="checkbox-example">
+            <Checkbox state="Empty" />
+            <span>Unchecked</span>
+          </div>
+          <div class="checkbox-example">
+            <Checkbox state="Checked" />
+            <span>Checked</span>
+          </div>
+          <div class="checkbox-example">
+            <Checkbox state="Checked" focusRing />
+            <span>With Focus Ring</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Cards</h2>
+        <div class="component-group">
+          <h3>Style Card</h3>
+          <div class="component-examples">
+            <Card 
+              type="Style" 
+              fillHeight={false}
+              title="Traditional Style"
+              description="A classic tattoo style with bold lines and vibrant colors."
+              tags={["Traditional", "Bold", "Colorful"]}
+            />
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Artist Card</h3>
+          <div class="component-examples">
+            <Card 
+              type="Artist" 
+              fillHeight={false}
+              title="Jane Doe"
+              description="Specialized in fine line and minimalist designs with over 10 years of experience."
+              artistTags={["Fine Line", "Minimalist", "Geometric"]}
+              instagram="@janedoe"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Artist Image</h2>
+        <div class="component-examples">
+          <ArtistImage />
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Image with Tags</h2>
+        <div class="component-group">
+          <h3>With Accent Tags</h3>
+          <div class="component-examples">
+            <div style="max-width: 400px; width: 100%;">
+              <ImageWithTags 
+                imageAlt="Tattoo artwork example"
+                tags={[
+                  { text: "Linework", color: "Accent" },
+                  { text: "Traditional & Old School", color: "Accent" },
+                  { text: "Cartoon", color: "Accent" }
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>With Primary Tags</h3>
+          <div class="component-examples">
+            <div style="max-width: 400px; width: 100%;">
+              <ImageWithTags 
+                imageAlt="Tattoo artwork example"
+                tags={[
+                  { text: "Fine Line", color: "Primary" },
+                  { text: "Minimalist", color: "Primary" },
+                  { text: "Geometric", color: "Primary" }
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Mixed Tag Colors</h3>
+          <div class="component-examples">
+            <div style="max-width: 400px; width: 100%;">
+              <ImageWithTags 
+                imageAlt="Tattoo artwork example"
+                tags={[
+                  { text: "Traditional", color: "Accent" },
+                  { text: "Bold", color: "Primary" },
+                  { text: "Colorful", color: "Accent" }
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Without Tags</h3>
+          <div class="component-examples">
+            <div style="max-width: 400px; width: 100%;">
+              <ImageWithTags 
+                imageAlt="Tattoo artwork example"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Gallery</h2>
+        <div class="component-group">
+          <h3>Gallery with 2 Images</h3>
+          <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">A gallery with only 2 images. All images are visible in the grid, and clicking any image opens the lightbox with both images.</p>
+          <div class="component-examples">
+            <div style="width: 100%;">
+              <Gallery images={figmaTattooImages.slice(0, 2)} />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Gallery with 4 Images</h3>
+          <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">A gallery with 4 images. All images are visible in the grid, and clicking any image opens the lightbox with all 4 images.</p>
+          <div class="component-examples">
+            <div style="width: 100%;">
+              <Gallery images={figmaTattooImages.slice(0, 4)} />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Gallery with 6 Images</h3>
+          <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">A gallery with exactly 6 images. All images are visible in the grid (the maximum displayed), and clicking any image opens the lightbox with all 6 images.</p>
+          <div class="component-examples">
+            <div style="width: 100%;">
+              <Gallery images={figmaTattooImages} />
+            </div>
+          </div>
+        </div>
+        <div class="component-group">
+          <h3>Gallery with 11 Images (Show All Overlay)</h3>
+          <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">A gallery with 11 images. The grid displays a maximum of 6 images, with the 6th image showing a "Show all" overlay. Clicking any image opens the lightbox at that image, while clicking the "Show all" overlay opens the lightbox at the last image (11th). The overlay covers both the image and tags. All 11 images are available in the lightbox slideshow, demonstrating how the component handles different aspect ratios (vertical and horizontal images).</p>
+          <div class="component-examples">
+            <div style="width: 100%;">
+              <Gallery 
+                images={[
+                  ...figmaTattooImages,
+                  ...additionalSampleImages.slice(0, 5)
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .design-system {
+    max-width: var(--container-max-width-xlarge);
+    margin: 0 auto;
+    padding: var(--spacing-core-1000-md) var(--spacing-page-padding);
+    overflow: hidden;
+  }
+
+  .design-system-header {
+    margin-bottom: var(--spacing-core-1000-md);
+    text-align: center;
+  }
+
+  .design-system-header h1 {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .design-system-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section-large);
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-1000-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .subsection h2 {
+    border-bottom: var(--border-width-divider) solid var(--color-border);
+    padding-bottom: var(--spacing-core-700-md);
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .subsection h3 {
+    margin-bottom: var(--spacing-core-700-md);
+    font-size: var(--font-size-heading-4);
+  }
+
+  /* Component Showcase */
+  .component-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .component-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .component-group h3 {
+    margin-bottom: var(--spacing-core-600-md);
+    font-size: var(--font-size-heading-5);
+  }
+
+  .component-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+  }
+
+  .component-examples.full-width {
+    width: 100%;
+    margin-left: calc(-1 * var(--spacing-page-padding));
+    margin-right: calc(-1 * var(--spacing-page-padding));
+    padding-left: var(--spacing-page-padding);
+    padding-right: var(--spacing-page-padding);
+  }
+
+  .checkbox-example {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-core-600-md);
+  }
+
+  .checkbox-example span {
+    font: var(--typography-body-md);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .design-system {
+      padding: var(--spacing-core-800-md) var(--spacing-core-700-md);
+    }
+
+    .design-system-header {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+
+    .component-examples {
+      flex-direction: column;
+    }
+
+    .component-examples.full-width {
+      margin-left: calc(-1 * var(--spacing-core-700-md));
+      margin-right: calc(-1 * var(--spacing-core-700-md));
+      padding-left: var(--spacing-core-700-md);
+      padding-right: var(--spacing-core-700-md);
+    }
+  }
+</style>

@@ -1,0 +1,469 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  screen?: "Desktop" | "Mobile";
+  menu?: boolean;
+  className?: string;
+}
+
+// Use props for static design system examples, but allow responsive behavior when not specified
+const { screen, menu, className = "" } = Astro.props;
+const isStaticMode = screen !== undefined;
+
+// Get current path to determine active nav item
+const currentPath = Astro.url.pathname;
+
+// Check if we're on the book page
+const isBookPage = currentPath === '/book';
+
+// Check if a nav link is active (homepage "/" maps to "/studio")
+// Note: Template pages (/artists/[slug] and /styles/[slug]) should not mark nav links as active
+const isActive = (href: string) => {
+  if (href === '/studio' && (currentPath === '/' || currentPath === '/studio')) {
+    return true;
+  }
+  // For /artists and /styles, only match exact paths, not template pages
+  if (href === '/artists' || href === '/styles') {
+    return currentPath === href;
+  }
+  return currentPath === href || currentPath.startsWith(href + '/');
+};
+---
+
+<header class={`header ${className}`} data-screen={screen || "Desktop"} data-menu={menu || false} data-static-mode={isStaticMode} data-hero-scrolled="false">
+  <div class="header-section">
+    <nav class="navbar">
+      <div class="nav-container">
+        <button class="menu-button" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="menu-icon-wrapper">
+            <span class="menu-icon menu-icon-open" data-menu-icon="open">
+              <Icon name="menu" size={24} />
+            </span>
+            <span class="menu-icon menu-icon-close" data-menu-icon="close">
+              <Icon name="close" size={24} />
+            </span>
+          </span>
+          <span class="menu-text">Menu</span>
+        </button>
+        <div class="nav-items">
+          <a href="/" class={`nav-link ${isActive('/studio') ? 'nav-link--active' : ''}`}>Studio</a>
+          <a href="/artists" class={`nav-link ${isActive('/artists') ? 'nav-link--active' : ''}`}>Artists</a>
+          <a href="/styles" class={`nav-link ${isActive('/styles') ? 'nav-link--active' : ''}`}>Styles</a>
+        </div>
+        <div class="nav-buttons">
+          <div class="header-logo-section">
+            <div class="header-logo-wrapper">
+              <Logo class="header-logo" />
+            </div>
+            <span class="header-logo-text">High Contrast Tattoo</span>
+          </div>
+          {!isBookPage && (
+            <div class="header-cta-button">
+              <Button type="Primary" color="Accent" href="/book" leadingIcon={false} trailingIcon={true} aria-label="Book a tattoo session">
+                Book a session
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="divider"></div>
+  <div class="nav-menu">
+    <a href="/" class={`nav-link nav-menu-link ${isActive('/studio') ? 'nav-link--active' : ''}`}>Studio</a>
+    <a href="/artists" class={`nav-link nav-menu-link ${isActive('/artists') ? 'nav-link--active' : ''}`}>Artists</a>
+    <a href="/styles" class={`nav-link nav-menu-link ${isActive('/styles') ? 'nav-link--active' : ''}`}>Styles</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: var(--color-neutral-0);
+  }
+
+  .header-section {
+    background-color: var(--color-neutral-0);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: 72px;
+    width: 100%;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 0 var(--spacing-core-800-md);
+  }
+
+  .nav-items {
+    display: flex;
+    gap: var(--spacing-core-900-md);
+    align-items: center;
+    flex: 1;
+  }
+
+  /* .nav-link styles are now in tokens.css */
+
+  .menu-button {
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-core-600-md);
+    height: 48px;
+    padding: var(--spacing-core-600-md) 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .menu-icon-wrapper {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .menu-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    display: none;
+  }
+
+  .menu-icon :global(.icon) {
+    display: inline-flex !important;
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary-600);
+  }
+
+  /* Default: show hamburger, hide close */
+  .menu-icon-open {
+    display: block;
+  }
+
+  .menu-icon-close {
+    display: none;
+  }
+
+  /* When menu is open: show close, hide hamburger */
+  .header[data-menu="true"] .menu-icon-open {
+    display: none;
+  }
+
+  .header[data-menu="true"] .menu-icon-close {
+    display: block;
+  }
+
+  /* When menu is closed: show hamburger, hide close */
+  .header[data-menu="false"] .menu-icon-open {
+    display: block;
+  }
+
+  .header[data-menu="false"] .menu-icon-close {
+    display: none;
+  }
+
+  .menu-text {
+    font: var(--typography-link);
+    color: var(--color-primary-600);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-core-100-md);
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  .header-logo-section {
+    display: flex;
+    gap: var(--spacing-core-700-md);
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header-cta-button {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* When hero is scrolled out, show CTA and hide logo */
+  .header[data-hero-scrolled="true"] .header-logo-section {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .header[data-hero-scrolled="true"] .header-cta-button {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+  }
+
+  .header-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scaleY(-1);
+    color: var(--color-primary-900);
+  }
+
+  .header-logo {
+    width: 16.513px;
+    height: 36px;
+    display: block;
+  }
+
+  .header-logo-text {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-900);
+  }
+
+  .nav-menu {
+    background-color: var(--color-neutral-0);
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-core-900-md);
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-core-900-md);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0px 0px var(--spacing-core-1600-md) var(--spacing-core-1100-md) var(--color-neutral-600);
+    position: relative;
+    z-index: 1;
+    min-height: auto;
+  }
+
+  /* nav-menu-link extends nav-link with full width */
+  .nav-menu-link {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .divider {
+    background-color: var(--color-primary-200);
+    height: 1px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .header-section {
+      z-index: 3;
+      position: relative;
+    }
+
+    .nav-menu {
+      z-index: 1;
+      position: relative;
+    }
+
+    .divider {
+      z-index: 2;
+      position: relative;
+    }
+
+    /* Responsive mode: hide nav-items and show menu-button on mobile */
+    .header:not([data-static-mode="true"]) .nav-items,
+    .header[data-static-mode="true"][data-screen="Mobile"] .nav-items {
+      display: none;
+    }
+
+    .header:not([data-static-mode="true"]) .menu-button,
+    .header[data-static-mode="true"][data-screen="Mobile"] .menu-button {
+      display: flex;
+    }
+
+    /* Show nav-menu only when on mobile and menu is open */
+    .header:not([data-static-mode="true"])[data-screen="Mobile"][data-menu="true"] .nav-menu,
+    .header[data-static-mode="true"][data-screen="Mobile"][data-menu="true"] .nav-menu {
+      display: flex;
+    }
+
+    /* Divider is always visible on mobile (both open and closed states) */
+  }
+</style>
+
+<script>
+  // Initialize responsive header behavior for all headers not in static mode
+  function initResponsiveHeader(header: HTMLElement) {
+    const isStaticMode = header.getAttribute('data-static-mode') === 'true';
+    if (isStaticMode) return;
+
+    const menuButton = header.querySelector('.menu-button') as HTMLButtonElement | null;
+    const MOBILE_BREAKPOINT = 768;
+
+    function updateViewportState() {
+      const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      const screen = isMobile ? 'Mobile' : 'Desktop';
+      header.setAttribute('data-screen', screen);
+      
+      // Close menu when switching to desktop
+      if (!isMobile) {
+        header.setAttribute('data-menu', 'false');
+        if (menuButton) {
+          menuButton.setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+
+    function toggleMenu(e: Event) {
+      e.stopPropagation();
+      const currentState = header.getAttribute('data-menu') === 'true';
+      const newState = !currentState;
+      header.setAttribute('data-menu', String(newState));
+      if (menuButton) {
+        menuButton.setAttribute('aria-expanded', String(newState));
+      }
+    }
+
+    // Initialize on load
+    updateViewportState();
+
+    // Handle resize with throttling
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+    function handleResize() {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = setTimeout(() => {
+        updateViewportState();
+      }, 150);
+    }
+    window.addEventListener('resize', handleResize);
+
+    // Handle menu button click
+    if (menuButton) {
+      menuButton.addEventListener('click', toggleMenu);
+    }
+
+    // Close menu when clicking outside (only on mobile)
+    function handleDocumentClick(e: Event) {
+      const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      if (isMobile && header.getAttribute('data-menu') === 'true') {
+        const target = e.target as Node;
+        if (!header.contains(target)) {
+          header.setAttribute('data-menu', 'false');
+          if (menuButton) {
+            menuButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    }
+    document.addEventListener('click', handleDocumentClick);
+  }
+
+  // Initialize scroll-based logo/CTA swapping for all headers
+  function initScrollBasedHeader(header: HTMLElement) {
+    const isStaticMode = header.getAttribute('data-static-mode') === 'true';
+    if (isStaticMode) return;
+
+    // Check if we're on the book page - if so, keep logo visible always
+    const isBookPage = window.location.pathname === '/book';
+    if (isBookPage) {
+      // On book page, always keep logo visible and don't set up scroll observer
+      header.setAttribute('data-hero-scrolled', 'false');
+      return;
+    }
+
+    // Find the top section - this works on all pages
+    // Priority: 1. Elements with data-top-section attribute
+    //           2. Common hero section classes
+    //           3. First section inside main
+    let topSection = document.querySelector('[data-top-section]') as HTMLElement | null;
+    
+    if (!topSection) {
+      // Look for common hero section classes
+      topSection = document.querySelector('.hero-section, .artists-hero-section, [class*="hero-section"]') as HTMLElement | null;
+    }
+    
+    if (!topSection) {
+      // Fallback: use the first section inside main
+      topSection = document.querySelector('main > section:first-of-type') as HTMLElement | null;
+    }
+    
+    if (!topSection) {
+      // If no top section exists, show CTA by default
+      header.setAttribute('data-hero-scrolled', 'true');
+      return;
+    }
+
+    // Use Intersection Observer to detect when top section leaves viewport
+    // When top section is completely out of viewport (scrolled past), show CTA
+    // When top section is visible in viewport, show logo
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: '0px',
+      threshold: 0, // trigger when any part of section enters/leaves viewport
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // When top section is not intersecting (completely scrolled out), show CTA
+        // When top section is intersecting (any part visible), show logo
+        const isTopSectionScrolledOut = !entry.isIntersecting;
+        header.setAttribute('data-hero-scrolled', String(isTopSectionScrolledOut));
+      });
+    }, observerOptions);
+
+    observer.observe(topSection);
+
+    // Cleanup observer when header is removed (if needed)
+    // For Astro, components are typically long-lived, so cleanup isn't critical
+    // but we can add it for completeness if needed
+  }
+
+  // Initialize all responsive headers when DOM is ready
+  if (typeof document !== 'undefined') {
+    function initializeHeaders() {
+      const headers = document.querySelectorAll<HTMLElement>('.header');
+      headers.forEach((header) => {
+        initResponsiveHeader(header);
+        initScrollBasedHeader(header);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeHeaders);
+    } else {
+      initializeHeaders();
+    }
+  }
+</script>

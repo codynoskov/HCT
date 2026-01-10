@@ -1,0 +1,149 @@
+---
+import Logo from '../Logo.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  className?: string;
+}
+
+const {
+  title = "Artists",
+  description = "Our artists bring distinct styles and a shared focus on precision, creativity, and custom tattoo work, ensuring each piece is crafted with care from concept to final detail.",
+  className = ""
+} = Astro.props;
+---
+
+<section class={`artists-hero-section ${className}`}>
+  <div class="artists-hero-container">
+    <!-- Decorative Logo -->
+    <div class="artists-hero-logo-decoration" aria-hidden="true">
+      <Logo width={192} height={418} class="artists-hero-logo" />
+    </div>
+
+    <!-- Main Hero Content -->
+    <div class="artists-hero-content-wrapper">
+      <div class="artists-hero-content">
+        <h1 class="artists-hero-title">{title}</h1>
+        <p class="artists-hero-description">{description}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .artists-hero-section {
+    width: 100%;
+    background-color: var(--color-primary-50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    min-width: 100%;
+  }
+
+  .artists-hero-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--spacing-core-1900-md);
+    margin: 0 auto;
+    padding: var(--spacing-core-1100-md) var(--spacing-core-800-md);
+    box-sizing: border-box;
+  }
+
+  /* Decorative Logo */
+  .artists-hero-logo-decoration {
+    position: absolute;
+    top: 0.42px;
+    left: 0.5px;
+    width: 192px;
+    height: 418px;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-200);
+    transform: scaleY(-1);
+  }
+
+  .artists-hero-logo-decoration :global(.artists-hero-logo) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .artists-hero-logo-decoration :global(.artists-hero-logo svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: currentColor;
+  }
+
+  .artists-hero-content-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .artists-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .artists-hero-title {
+    font: var(--typography-h1);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .artists-hero-description {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-900);
+    margin: 0;
+    max-width: 640px;
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .artists-hero-container {
+      padding: var(--spacing-core-1100-md) var(--spacing-core-800-md);
+    }
+
+    .artists-hero-logo-decoration {
+      width: 140px;
+      height: 320px;
+    }
+
+    .artists-hero-title {
+      font: var(--typography-h2);
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .artists-hero-container {
+      padding-top: var(--spacing-core-1100-md);
+      padding-bottom: var(--spacing-core-1000-md);
+      padding-left: var(--spacing-core-800-md);
+      padding-right: var(--spacing-core-800-md);
+    }
+
+    .artists-hero-logo-decoration {
+      width: 120px;
+      height: 260px;
+    }
+
+    .artists-hero-title {
+      font: var(--typography-h2);
+    }
+
+    .artists-hero-description {
+      font: var(--typography-body-md);
+    }
+  }
+</style>

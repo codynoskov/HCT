@@ -1,0 +1,246 @@
+---
+import Tag from "./Tag.astro";
+import ArtistImage from "./ArtistImage.astro";
+import Button from "./Button.astro";
+import placeholderImage from "../assets/images/placeholder.png";
+
+interface Props {
+  type?: "Style" | "Artist";
+  fillHeight?: boolean;
+  title?: string;
+  description?: string;
+  descriptionSize?: "sm" | "md" | "lg";
+  image?: string;
+  imageAlt?: string;
+  tags?: string[];
+  artistTags?: string[];
+  instagram?: string;
+  href?: string;
+  className?: string;
+}
+
+const { 
+  type = "Style",
+  fillHeight = true,
+  title = "Style name",
+  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam massa nec dui pharetra, non commodo quam maximus. Maecenas sapien sem, scelerisque quis varius at, ultrices vitae tortor. Vivamus cursus arcu mauris, eget blandit urna mollis a. Etiam eu consequat velit, tincidunt placerat augue.",
+  descriptionSize = "md",
+  image,
+  imageAlt = "",
+  tags = [],
+  artistTags = [],
+  instagram,
+  href,
+  className = ""
+} = Astro.props;
+
+const isArtist = type === "Artist";
+const displayTags = isArtist ? artistTags : tags;
+const buttonText = isArtist ? "Meet the artist" : "Explore style";
+const descriptionSizeClass = `card-description-${descriptionSize}`;
+---
+
+<article class={`card card-${type} ${fillHeight ? 'card-fill' : 'card-hug'} ${className}`}>
+  <div class="card-group">
+    {!isArtist && (
+      <div class="card-header-image">
+        <img src={image || placeholderImage.src} alt={imageAlt} />
+      </div>
+    )}
+    {isArtist && (
+      <div class="card-header-artist">
+        <ArtistImage image={image} imageAlt={imageAlt || "Artist image"} />
+      </div>
+    )}
+    <div class="card-body">
+      <div class="card-content">
+        <h3 class="card-title">{title}</h3>
+        <p class={`card-description ${descriptionSizeClass}`}>{description}</p>
+        {isArtist && instagram && (
+          <p class="card-instagram">
+            <strong>Instagram:</strong> <a href={`https://instagram.com/${instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer">@{instagram.replace('@', '')}</a>
+          </p>
+        )}
+        {displayTags.length > 0 && (
+          <div class="card-tags">
+            {displayTags.map((tag) => (
+              <Tag color={isArtist ? "Primary" : "Accent"}>{tag}</Tag>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="card-footer-content">
+        <Button 
+          type="Secondary" 
+          color="Primary"
+          leadingIcon={false}
+          trailingIcon={true}
+          href={href}
+          className="card-button"
+        >
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--color-neutral-50);
+    border: var(--border-width-default) solid var(--color-neutral-200);
+    width: 100%;
+    max-width: 416px;
+    min-height: 0;
+  }
+
+  .card-fill {
+    /* Cards will stretch via align-items: stretch on parent */
+  }
+
+  .card-hug {
+    /* Cards will stretch via align-items: stretch on parent */
+  }
+
+  .card-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Style Card - Header Image */
+  .card-Style .card-header-image {
+    position: relative;
+    aspect-ratio: 288 / 216;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .card-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    pointer-events: none;
+  }
+
+
+  /* Artist Card - Header */
+  .card-Artist .card-header-artist {
+    padding: var(--spacing-core-800-md);
+    padding-bottom: 0;
+    padding-top: var(--spacing-core-800-md);
+  }
+
+  .card-body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+    padding: var(--spacing-core-800-md);
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    justify-content: flex-start;
+  }
+
+  .card-title {
+    font: var(--typography-h3);
+    color: var(--color-text);
+    margin: 0;
+    width: 100%;
+  }
+
+  .card-description {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    width: 100%;
+  }
+
+  .card-description-sm {
+    font: var(--typography-body-sm);
+  }
+
+  .card-description-md {
+    font: var(--typography-body-md);
+  }
+
+  .card-description-lg {
+    font: var(--typography-body-lg);
+  }
+
+  .card-instagram {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    width: 100%;
+    font-size: var(--font-size-core-700-md);
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .card-instagram strong {
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-stack-sans);
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-500-md);
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .card-footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: var(--spacing-core-800-md);
+  }
+
+  .card-button {
+    width: 100%;
+  }
+
+  /* Mobile Breakpoint - 767px and below */
+  @media (max-width: 767px) {
+    .card {
+      max-width: 364px;
+    }
+
+    /* Style Card - Mobile Header Image */
+    .card-Style .card-header-image {
+      aspect-ratio: 364 / 273;
+    }
+  }
+</style>

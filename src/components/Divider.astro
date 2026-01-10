@@ -1,0 +1,28 @@
+---
+interface Props {
+  color?: "light" | "dark" | "accent";
+  className?: string;
+}
+
+const { 
+  color = "light",
+  className = "" 
+} = Astro.props;
+
+const colorMap = {
+  light: "var(--color-primary-200)",
+  dark: "var(--color-primary-600)",
+  accent: "var(--color-accent-300)"
+};
+
+const bgColor = colorMap[color] || colorMap.light;
+---
+
+<div class={`divider divider-${color} ${className}`} style={`background-color: ${bgColor};`}></div>
+
+<style>
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+</style>

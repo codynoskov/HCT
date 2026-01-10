@@ -1,0 +1,117 @@
+---
+import Card from '../Card.astro';
+import Button from '../Button.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+interface StyleCard {
+  title: string;
+  description: string;
+  image?: string;
+  tags?: string[];
+  href?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  styles?: StyleCard[];
+  ctaText?: string;
+  ctaHref?: string;
+  className?: string;
+}
+
+const {
+  title = "Explore the styles",
+  description = "From bold blackwork to delicate fine line, from traditional to contemporary — discover the diverse range of tattoo styles our artists specialize in.",
+  styles = [
+    {
+      title: "Style name",
+      description: "This approach is built around clarity, precision, and visual restraint. Instead of relying on shading or color, the entire composition is carried by line alone. The focus is on structure, balance, and rhythm, resulting in tattoos that feel clean, intentional, and timeless.",
+      image: placeholderImage.src,
+      tags: ["Arseniy", "Sera", "Gil", "Sarah", "Luara", "Dennis", "Bruno", "Ed", "Alex"],
+      href: "/styles/style-name"
+    },
+    {
+      title: "Floral & Botanic",
+      description: "Inspired by nature, this approach translates organic shapes into tattoo designs that work harmoniously with the body. Rather than aiming for realism, the focus is on flow, structure, and balance, allowing natural elements to feel integrated rather than decorative.",
+      image: placeholderImage.src,
+      tags: ["Nastia Zlotin", "Zohar", "Sera", "Gil", "Sina Ra", "Luara", "Dennis", "Bruno", "Ed", "Alex"],
+      href: "/styles/floral-botanic"
+    },
+    {
+      title: "Blackwork",
+      description: "Defined by contrast and discipline, this approach uses only black ink to create strong, graphic tattoos. The absence of color places full emphasis on shape, density, and negative space, resulting in bold and direct visual statements.",
+      image: placeholderImage.src,
+      tags: ["Nastia Zlotin", "Zohar", "Sera", "Gil", "Sina Ra", "Luara", "Dennis", "Bruno", "Ed", "Alex"],
+      href: "/styles/blackwork"
+    },
+    {
+      title: "Neo Traditional",
+      description: "Highlighting clarity and precision, this technique embraces visual simplicity. It steers clear of shading and color, relying entirely on line work. The emphasis is on structure, balance, and rhythm, resulting in tattoos that are clean, deliberate, and timeless.",
+      image: placeholderImage.src,
+      tags: ["Sina Ra", "Sarah", "Skezy", "Dennis", "Bruno", "Ed", "Alex"],
+      href: "/styles/neo-traditional"
+    },
+    {
+      title: "Illustrative",
+      description: "Rooted in drawing and visual storytelling, this approach blends artistic expression with tattoo-specific structure. The result is tattoos that feel expressive and personal while remaining technically sound and long-lasting.",
+      image: placeholderImage.src,
+      tags: ["Sina Ra", "Sarah", "Skezy", "Dennis", "Bruno", "Ed", "Alex"],
+      href: "/styles/illustrative"
+    }
+  ],
+  ctaText = "Explore all Styles",
+  ctaHref = "/styles",
+  className = ""
+} = Astro.props;
+---
+
+<section class={`section section--carousel ${className}`}>
+  <div class="container">
+    <div class="section-text-block">
+      <h2 class="section-title">{title}</h2>
+      <p class="section-description">{description}</p>
+    </div>
+  </div>
+  
+  <div class="carousel-wrapper" style="margin-top: var(--spacing-core-900-md);">
+    <div class="carousel">
+      <div class="carousel-track">
+        {styles.map((style, index) => {
+          const sizes: ("sm" | "md" | "lg")[] = ["sm", "md", "lg", "md", "sm"];
+          const descriptionSize = sizes[index] || "md";
+          return (
+            <Card 
+              type="Style"
+              fillHeight={false}
+              title={style.title}
+              description={style.description}
+              descriptionSize={descriptionSize}
+              image={style.image}
+              tags={style.tags}
+              href={style.href}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="section-action">
+      <Button 
+        type="Primary" 
+        color="Primary"
+        href={ctaHref}
+        leadingIcon={false}
+        trailingIcon={true}
+      >
+        {ctaText}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* All styles now handled by .section--carousel in tokens.css */
+</style>

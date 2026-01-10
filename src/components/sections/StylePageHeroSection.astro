@@ -1,0 +1,200 @@
+---
+import Button from '../Button.astro';
+import Logo from '../Logo.astro';
+
+interface Artist {
+  name: string;
+  href?: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  artists?: Artist[];
+  bookingHref?: string;
+  className?: string;
+}
+
+const {
+  name,
+  description,
+  artists = [],
+  bookingHref = "/book",
+  className = ""
+} = Astro.props;
+---
+
+<section class={`style-page-hero ${className}`} data-top-section>
+  <div class="container">
+    <!-- Logo positioned at container level, at left edge of container -->
+    <div class="logo-background">
+      <Logo width={192} height={418} class="background-logo" />
+    </div>
+    <div class="hero-layout">
+      <!-- Style Info (no portrait image like Artist page) -->
+      <div class="style-info">
+        <h1 class="style-name">{name}</h1>
+        <p class="style-description">{description}</p>
+        
+        {artists.length > 0 && (
+          <p class="style-artists">
+            <strong>Artists working in this style:</strong>{" "}
+            <span set:html={artists.map((artist, index) => 
+              `<a href="${artist.href || `/artists/${artist.name.toLowerCase().replace(/\s+/g, '-')}`}" class="style-artist-link">${artist.name}</a>${index < artists.length - 1 ? ', ' : ''}`
+            ).join('')} />
+          </p>
+        )}
+        
+        <div class="style-actions">
+          <Button
+            type="Primary"
+            color="Accent"
+            href={bookingHref}
+            leadingIcon={false}
+            trailingIcon={true}
+          >
+            Book a session
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .style-page-hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-primary-50);
+    padding: var(--spacing-core-1100-md) 0 var(--spacing-core-1300-lg) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .style-page-hero .container {
+    max-width: var(--spacing-core-1900-md); /* 1440px - same as global container */
+    padding: 0 var(--spacing-core-800-md);
+    width: 100%;
+    position: relative;
+  }
+
+  .hero-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+  }
+
+  /* Logo positioned at container level, at left edge of container */
+  .logo-background {
+    position: absolute;
+    left: 0;
+    top: calc(-1 * var(--spacing-core-1100-md)); /* Offset to align with section top */
+    pointer-events: none;
+    z-index: 0;
+    color: var(--color-primary-200);
+    transform: scaleY(-1);
+  }
+
+  .logo-background :global(.background-logo) {
+    display: block;
+  }
+
+  /* Style Info */
+  .style-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .style-name {
+    font: var(--typography-h1);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .style-description {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-900);
+    margin: 0;
+    font-weight: var(--font-weight-light);
+    max-width: 640px;
+  }
+
+  .style-artists {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .style-artists strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .style-artist-link {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .style-artist-link:hover {
+    color: var(--color-primary-700);
+  }
+
+  .style-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+    padding-top: var(--spacing-core-900-md);
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .style-name {
+      font: var(--typography-h2);
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .style-page-hero {
+      padding: var(--spacing-core-1100-md) 0 var(--spacing-core-1300-lg) 0;
+    }
+
+    .style-page-hero .container {
+      padding: 0 var(--spacing-core-800-md);
+    }
+
+    .style-info {
+      width: 100%;
+    }
+
+    /* Logo stays at container level, same position */
+    .logo-background {
+      left: 0;
+      top: calc(-1 * var(--spacing-core-1100-md));
+    }
+
+    .style-name {
+      font: var(--typography-h1);
+      width: 100%;
+    }
+
+    .style-description {
+      font: var(--typography-body-lg);
+      width: 100%;
+    }
+
+    .style-actions {
+      padding-top: var(--spacing-core-900-md);
+      width: auto;
+    }
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import logo from '../../assets/logo.svg';
+
+interface Props {
+  title?: string;
+  description?: string;
+  className?: string;
+}
+
+const {
+  title = "Our approach and values",
+  description = "At High Contrast Tattoo, we believe in creating more than just tattoos — we create meaningful art that becomes part of your story. Our approach combines technical excellence with genuine collaboration. We take time to understand your vision, refine it together, and execute it with precision. Every session is a partnership where your ideas meet our expertise.",
+  className = ""
+} = Astro.props;
+---
+
+<section class={`section section--values ${className}`}>
+  <div class="container container--centered">
+    <div class="values-logo-wrapper">
+      <img src={logo.src} alt="" class="values-logo" aria-hidden="true" />
+    </div>
+    
+    <div class="section-text-block" style="max-width: 800px; align-items: center;">
+      <h2 class="section-title" style="color: var(--color-primary-50);">{title}</h2>
+      <p class="section-description" style="color: var(--color-primary-200);">{description}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section--values {
+    background-color: var(--color-primary-600);
+  }
+
+  .section--values :global(.container) {
+    gap: var(--spacing-core-900-md);
+  }
+
+  .values-logo-wrapper {
+    transform: scaleY(-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .values-logo {
+    width: 72px;
+    height: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 767px) {
+    .values-logo {
+      width: 48px;
+    }
+
+    .section--values .section-text-block {
+      max-width: 100%;
+    }
+  }
+</style>

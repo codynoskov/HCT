@@ -1,0 +1,366 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  type?: "Primary" | "Secondary";
+  color?: "Primary" | "Accent";
+  leadingIcon?: boolean;
+  leadingIconName?: string;
+  trailingIcon?: boolean;
+  trailingIconName?: string;
+  href?: string;
+  className?: string;
+  target?: string;
+  rel?: string;
+  "aria-label"?: string;
+}
+
+const { 
+  type = "Primary", 
+  color = "Primary",
+  leadingIcon = true,
+  leadingIconName = "zap",
+  trailingIcon = true,
+  trailingIconName = "chevron-right",
+  href,
+  className = "",
+  target,
+  rel,
+  "aria-label": ariaLabel
+} = Astro.props;
+
+const isPrimary = type === "Primary";
+
+const Tag = href ? "a" : "button";
+const tagProps = href 
+  ? { 
+      href,
+      target,
+      rel,
+      "aria-label": ariaLabel,
+    } 
+  : { 
+      type: "button",
+      "aria-label": ariaLabel,
+    };
+---
+
+<Tag 
+  class={`button-wrapper button-${type} button-${color} ${className}`}
+  {...tagProps}
+>
+  <span class={`button-inner ${isPrimary ? 'button-inner-primary' : ''}`}>
+    {leadingIcon && (
+      <Icon name={leadingIconName} size={24} class="icon-leading" />
+    )}
+    <span class="button-text">
+      <slot />
+    </span>
+    {trailingIcon && (
+      <Icon name={trailingIconName} size={24} class="icon-trailing" />
+    )}
+  </span>
+</Tag>
+
+<style>
+  /* ============================================
+     CSS CUSTOM PROPERTIES FOR BUTTON THEMING
+     ============================================ */
+
+  /* Primary Type + Primary Color */
+  .button-Primary.button-Primary {
+    --btn-outline: var(--color-primary-300);
+    --btn-bg: var(--color-primary-300);
+    --btn-inner-bg: var(--color-primary-900);
+    --btn-inner-color: var(--color-primary-50);
+    --btn-outline-hover: var(--color-primary-400);
+    --btn-bg-hover: var(--color-primary-400);
+    --btn-inner-bg-hover: var(--color-primary-950);
+    --btn-inner-color-hover: var(--color-primary-100);
+    --btn-outline-active: var(--color-primary-500);
+    --btn-bg-active: var(--color-primary-500);
+    --btn-inner-bg-active: var(--color-neutral-1000);
+    --btn-inner-color-active: var(--color-primary-200);
+  }
+
+  /* Primary Type + Accent Color */
+  .button-Primary.button-Accent {
+    --btn-outline: var(--color-accent-300);
+    --btn-bg: var(--color-accent-300);
+    --btn-inner-bg: var(--color-accent-600);
+    --btn-inner-color: var(--color-accent-50);
+    --btn-outline-hover: var(--color-accent-400);
+    --btn-bg-hover: var(--color-accent-400);
+    --btn-inner-bg-hover: var(--color-accent-700);
+    --btn-inner-color-hover: var(--color-accent-100);
+    --btn-outline-active: var(--color-accent-500);
+    --btn-bg-active: var(--color-accent-500);
+    --btn-inner-bg-active: var(--color-accent-800);
+    --btn-inner-color-active: var(--color-accent-200);
+  }
+
+  /* Secondary Type + Primary Color */
+  .button-Secondary.button-Primary {
+    --btn-inner-color: var(--color-primary-600);
+    --btn-inner-color-hover: var(--color-primary-700);
+    --btn-inner-color-active: var(--color-primary-800);
+  }
+
+  /* Secondary Type + Accent Color */
+  .button-Secondary.button-Accent {
+    --btn-inner-color: var(--color-accent-600);
+    --btn-inner-color-hover: var(--color-accent-700);
+    --btn-inner-color-active: var(--color-accent-800);
+  }
+
+  /* ============================================
+     BASE BUTTON WRAPPER STYLES
+     ============================================ */
+  .button-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+    height: var(--spacing-core-1000-sm);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    opacity: 1;
+  }
+
+  .button-wrapper:hover,
+  .button-wrapper:active {
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  .button-wrapper:focus-visible {
+    outline: 2px solid var(--color-primary-500) !important;
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     BUTTON INNER STYLES
+     ============================================ */
+  .button-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-core-600-md);
+    font: var(--typography-button);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--typography-button-letter-spacing);
+    text-decoration: none !important;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    opacity: 1;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .button-inner:hover,
+  .button-inner:active {
+    text-decoration: none !important;
+    opacity: 1;
+  }
+
+  .button-inner:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  /* Primary button inner with corner cut */
+  .button-inner-primary {
+    overflow: hidden;
+    padding: 0 var(--spacing-core-700-md);
+  }
+
+  .button-inner-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--spacing-core-500-md);
+    height: var(--spacing-core-500-md);
+    background-color: var(--btn-bg, transparent);
+    z-index: 1;
+  }
+
+  .button-inner-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-bottom: var(--spacing-core-500-md) solid var(--btn-bg, transparent);
+    border-right: var(--spacing-core-500-md) solid transparent;
+    z-index: 1;
+  }
+
+  /* ============================================
+     PRIMARY TYPE STYLES
+     ============================================ */
+  .button-Primary {
+    outline: var(--spacing-core-300-md) solid var(--btn-outline);
+    outline-offset: 0;
+    background-color: var(--btn-bg);
+  }
+
+  .button-Primary .button-inner {
+    background-color: var(--btn-inner-bg);
+    color: var(--btn-inner-color);
+  }
+
+  .button-Primary:hover {
+    outline-color: var(--btn-outline-hover);
+    background-color: var(--btn-bg-hover);
+    --btn-bg: var(--btn-bg-hover);
+  }
+
+  .button-Primary:hover .button-inner {
+    background-color: var(--btn-inner-bg-hover);
+    color: var(--btn-inner-color-hover);
+  }
+
+  .button-Primary:active {
+    outline-color: var(--btn-outline-active);
+    background-color: var(--btn-bg-active);
+    --btn-bg: var(--btn-bg-active);
+  }
+
+  .button-Primary:active .button-inner {
+    background-color: var(--btn-inner-bg-active);
+    color: var(--btn-inner-color-active);
+  }
+
+  /* ============================================
+     SECONDARY TYPE STYLES
+     ============================================ */
+  .button-Secondary,
+  .button-Secondary:hover,
+  .button-Secondary:active,
+  .button-Secondary:visited,
+  .button-Secondary:link {
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none;
+    outline: none;
+    text-decoration: none !important;
+  }
+
+  .button-Secondary .button-inner,
+  .button-Secondary:hover .button-inner,
+  .button-Secondary:active .button-inner,
+  .button-Secondary:visited .button-inner,
+  .button-Secondary:link .button-inner {
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  .button-Secondary,
+  .button-Secondary:link,
+  .button-Secondary:visited {
+    color: var(--btn-inner-color);
+  }
+
+  .button-Secondary .button-inner,
+  .button-Secondary:link .button-inner,
+  .button-Secondary:visited .button-inner {
+    color: var(--btn-inner-color);
+  }
+
+  .button-Secondary:hover {
+    color: var(--btn-inner-color-hover);
+  }
+
+  .button-Secondary:hover .button-inner {
+    color: var(--btn-inner-color-hover);
+  }
+
+  .button-Secondary:active {
+    color: var(--btn-inner-color-active);
+  }
+
+  .button-Secondary:active .button-inner {
+    color: var(--btn-inner-color-active);
+  }
+
+  /* ============================================
+     TEXT AND ICON STYLES
+     ============================================ */
+  .button-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font: var(--typography-button);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    text-decoration: none !important;
+  }
+
+  .icon-leading {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    overflow: clip;
+    position: relative;
+  }
+
+  .icon-leading :global(.icon) {
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+
+  .icon-leading :global(.icon svg) {
+    width: 20px;
+    height: 22px;
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    display: block;
+  }
+
+  .icon-trailing {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    overflow: clip;
+    position: relative;
+  }
+
+  .icon-trailing :global(.icon) {
+    position: absolute;
+    top: 20.83%;
+    left: 33.33%;
+    right: 33.33%;
+    bottom: 20.83%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+  }
+
+  .icon-trailing :global(.icon svg) {
+    width: 14px;
+    height: 8px;
+    transform: rotate(90deg) scaleY(-1);
+    display: block;
+  }
+</style>

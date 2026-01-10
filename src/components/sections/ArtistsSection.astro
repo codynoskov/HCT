@@ -1,0 +1,115 @@
+---
+import Card from '../Card.astro';
+import Button from '../Button.astro';
+import placeholderImage from '../../assets/images/artist-placeholder.png';
+
+interface ArtistCard {
+  title: string;
+  description: string;
+  image?: string;
+  artistTags?: string[];
+  instagram?: string;
+  href?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  artists?: ArtistCard[];
+  ctaText?: string;
+  ctaHref?: string;
+  className?: string;
+}
+
+const {
+  title = "Meet the artists",
+  description = "Our team of talented artists brings diverse backgrounds and specializations. Each artist has their own unique style while sharing our studio's commitment to excellence.",
+  artists = [
+    {
+      title: "Alex",
+      description: "I'm a traditional tattoo artist rooted in the hardcore punk scene — vegan, straight edge, and a coffee lover.",
+      image: placeholderImage.src,
+      artistTags: ["Linework", "Traditional & Old School", "Cartoon"],
+      href: "/artists/alex"
+    },
+    {
+      title: "Arseniy",
+      description: "Born from hardcore punk — Arseniy has been tattooing since 2013. His Traditional and Old School tattoos are fast, bold, and built to last. You can choose from his collection of ready-made flash designs, or he'll be happy to bring your own idea to life.",
+      image: placeholderImage.src,
+      artistTags: ["Linework", "White on Black", "Traditional & Old School", "Fineline", "Tribal & Neo-Tribal"],
+      instagram: "@arspunx",
+      href: "/artists/arseniy"
+    },
+    {
+      title: "Gil",
+      description: "Born and raised in Berlin. I do engraving tattoos inspired by medieval woodcuts and cooper engravings. I really enjoy doing nature themed tattoos like flowers, animals, medieval stuff and designs out of the soulsborne universe.",
+      image: placeholderImage.src,
+      artistTags: ["Linework", "Floral & Botanic", "Engraving"],
+      href: "/artists/gil"
+    },
+    {
+      title: "Sarah",
+      description: "I'm a beginner artist based in Berlin (born/raised in Castrop-Rauxel ). My tattoo style is kinda blackwork traditional. What matters most to me is that you feel comfortable — not just with your tattoo, but with the whole process around it. If you want to get to know me, my work and my personality: @sarah_rawk.",
+      image: placeholderImage.src,
+      artistTags: ["Linework", "Blackwork", "Traditional & Old School", "Classic Black & Grey"],
+      instagram: "@sarah_rawk_tattoo",
+      href: "/artists/sarah"
+    }
+  ],
+  ctaText = "Meet all our Artists",
+  ctaHref = "/artists",
+  className = ""
+} = Astro.props;
+---
+
+<section class={`section section--carousel ${className}`}>
+  <div class="container">
+    <div class="section-text-block">
+      <h2 class="section-title">{title}</h2>
+      <p class="section-description">{description}</p>
+    </div>
+  </div>
+  
+  <div class="carousel-wrapper" style="margin-top: var(--spacing-core-900-md);">
+    <div class="carousel">
+      <div class="carousel-track">
+        {artists.map((artist, index) => {
+          const sizes: ("sm" | "md" | "lg")[] = ["lg", "md", "sm", "lg"];
+          const descriptionSize = sizes[index] || "md";
+          return (
+            <Card 
+              type="Artist"
+              fillHeight={false}
+              title={artist.title}
+              description={artist.description}
+              descriptionSize={descriptionSize}
+              image={artist.image}
+              artistTags={artist.artistTags}
+              instagram={artist.instagram}
+              href={artist.href}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="section-action">
+      <Button 
+        type="Primary" 
+        color="Primary"
+        href={ctaHref}
+        leadingIcon={false}
+        trailingIcon={true}
+        trailingIconName="chevron-right"
+      >
+        {ctaText}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* All styles now handled by .section--carousel in tokens.css */
+</style>

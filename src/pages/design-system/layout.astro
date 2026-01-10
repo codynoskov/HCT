@@ -1,0 +1,134 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemNav from '../../components/DesignSystemNav.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout>
+  <div class="design-system">
+    <header class="design-system-header">
+      <h1>Design System</h1>
+      <p class="body-lg">A comprehensive overview of design tokens, typography, icons, and components</p>
+    </header>
+
+    <DesignSystemNav />
+
+    <main class="design-system-content">
+      <div class="subsection">
+        <h2>Header</h2>
+        <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">The header adapts dynamically to the browser window width. On desktop, it displays navigation links and a "Book a session" button. On mobile, it shows a menu button instead.</p>
+        <div class="component-examples full-width">
+          <Header />
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h2>Footer</h2>
+        <p class="body-md" style="margin-bottom: var(--spacing-core-700-md);">The footer includes contact information, a map placeholder, and navigation links. It adapts its layout for smaller screens.</p>
+        <div class="component-examples full-width">
+          <Footer />
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .design-system {
+    max-width: var(--container-max-width-xlarge);
+    margin: 0 auto;
+    padding: var(--spacing-core-1000-md) var(--spacing-page-padding);
+    overflow: hidden;
+  }
+
+  .design-system-header {
+    margin-bottom: var(--spacing-core-1000-md);
+    text-align: center;
+  }
+
+  .design-system-header h1 {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .design-system-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section-large);
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-1000-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .subsection h2 {
+    border-bottom: var(--border-width-divider) solid var(--color-border);
+    padding-bottom: var(--spacing-core-700-md);
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .subsection h3 {
+    margin-bottom: var(--spacing-core-700-md);
+    font-size: var(--font-size-heading-4);
+  }
+
+  /* Component Showcase */
+  .component-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-800-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .component-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .component-group h3 {
+    margin-bottom: var(--spacing-core-600-md);
+    font-size: var(--font-size-heading-5);
+  }
+
+  .component-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-start;
+  }
+
+  .component-examples.full-width {
+    width: 100%;
+    margin-left: calc(-1 * var(--spacing-page-padding));
+    margin-right: calc(-1 * var(--spacing-page-padding));
+    padding-left: var(--spacing-page-padding);
+    padding-right: var(--spacing-page-padding);
+  }
+
+  @media (max-width: 768px) {
+    .design-system {
+      padding: var(--spacing-core-800-md) var(--spacing-core-700-md);
+    }
+
+    .design-system-header {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+
+    .component-examples {
+      flex-direction: column;
+    }
+
+    .component-examples.full-width {
+      margin-left: calc(-1 * var(--spacing-core-700-md));
+      margin-right: calc(-1 * var(--spacing-core-700-md));
+      padding-left: var(--spacing-core-700-md);
+      padding-right: var(--spacing-core-700-md);
+    }
+  }
+</style>

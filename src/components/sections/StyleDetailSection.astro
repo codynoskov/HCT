@@ -1,0 +1,251 @@
+---
+import Button from '../Button.astro';
+import Gallery from '../Gallery.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  tags?: Array<{
+    text: string;
+    color?: "Primary" | "Accent" | "Neutral";
+  }>;
+}
+
+interface Artist {
+  name: string;
+  href?: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  artists?: Artist[];
+  galleryImages?: GalleryImage[];
+  bookingHref?: string;
+  exploreHref?: string;
+  className?: string;
+}
+
+const {
+  name,
+  description,
+  artists = [],
+  galleryImages = [],
+  bookingHref = "/book",
+  exploreHref = `/styles/${name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`,
+  className = ""
+} = Astro.props;
+
+// Generate default gallery images if none provided
+const defaultGalleryImages: GalleryImage[] = Array(6).fill(null).map((_, i) => ({
+  src: placeholderImage.src,
+  alt: `${name} tattoo example ${i + 1}`,
+  tags: [{ text: "Created by Artist", color: "Accent" as const }]
+}));
+
+const displayGalleryImages = galleryImages.length > 0 ? galleryImages : defaultGalleryImages;
+---
+
+<section class={`style-detail-section ${className}`}>
+  <div class="container">
+    <div class="style-detail-layout">
+      <!-- Left Column: Text Content -->
+      <div class="style-content-column">
+        <div class="style-text-block">
+          <h2 class="style-name">{name}</h2>
+          <p class="style-description">{description}</p>
+          
+          {artists.length > 0 && (
+            <p class="style-artists">
+              <strong>Artists working in this style:</strong>{" "}
+              <span set:html={artists.map((artist, index) => 
+                `<a href="${artist.href || `/artists#${artist.name.toLowerCase().replace(/\s+/g, '-')}`}" class="style-artist-link">${artist.name}</a>${index < artists.length - 1 ? ', ' : ''}`
+              ).join('')} />
+            </p>
+          )}
+        </div>
+        
+        <div class="style-actions">
+          <Button
+            type="Primary"
+            color="Primary"
+            href={bookingHref}
+            leadingIcon={false}
+            trailingIcon={true}
+          >
+            Book a session
+          </Button>
+          <Button
+            type="Secondary"
+            color="Primary"
+            href={exploreHref}
+            leadingIcon={false}
+            trailingIcon={true}
+            className="style-explore-link"
+          >
+            Explore the style
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right Column: Gallery -->
+      <div class="style-gallery-column">
+        <Gallery images={displayGalleryImages} maxVisible={6} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .style-detail-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-core-1100-md) 0;
+    overflow: hidden;
+  }
+
+  .style-detail-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-900-md);
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  /* Left Column: Text Content */
+  .style-content-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 288px;
+    max-width: 640px;
+  }
+
+  .style-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    width: 100%;
+  }
+
+  .style-name {
+    font: var(--typography-h2);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .style-description {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    font-weight: var(--font-weight-light);
+    line-height: var(--line-height-core-800-md);
+  }
+
+  .style-artists {
+    font: var(--typography-body-md);
+    color: var(--color-primary-900);
+    margin: 0;
+    line-height: var(--line-height-core-800-md);
+    font-weight: var(--font-weight-light);
+  }
+
+  .style-artists strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .style-artist-link {
+    color: var(--color-primary-900);
+    text-decoration: underline;
+    text-underline-position: from-font;
+    font-weight: var(--font-weight-light);
+  }
+
+  .style-artist-link:hover {
+    color: var(--color-primary-700);
+  }
+
+  .style-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-800-md);
+    align-items: center;
+    padding-top: var(--spacing-core-900-md);
+    width: 100%;
+  }
+
+  .style-explore-link {
+    height: var(--spacing-core-1000-sm);
+    padding: var(--spacing-core-600-md) 0;
+  }
+
+  /* Right Column: Gallery */
+  .style-gallery-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 416px;
+    width: 100%;
+    min-height: 0;
+  }
+
+  /* Tablet Layout */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .style-detail-layout {
+      gap: var(--spacing-core-800-md);
+    }
+
+    .style-content-column {
+      max-width: none;
+      min-width: 280px;
+    }
+
+    .style-gallery-column {
+      min-width: 350px;
+    }
+
+    .style-name {
+      font: var(--typography-h3);
+    }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .style-detail-section {
+      padding: var(--spacing-core-1100-md) 0;
+    }
+
+    .style-detail-layout {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-core-900-md);
+    }
+
+    .style-content-column {
+      max-width: none;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .style-gallery-column {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .style-name {
+      font: var(--typography-h2);
+    }
+
+    .style-description {
+      font: var(--typography-body-md);
+    }
+
+    .style-actions {
+      width: 100%;
+      padding-top: var(--spacing-core-900-md);
+    }
+  }
+</style>

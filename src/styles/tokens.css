@@ -1,0 +1,531 @@
+/* Design Tokens - High Contrast Tattoo Website */
+
+:root {
+  /* ============================================
+     COLOR TOKENS
+     ============================================ */
+  
+  /* Primary Colors */
+  --color-primary-50: #f3fafa;
+  --color-primary-100: #e6f1f1;
+  --color-primary-200: #d3e2e2;
+  --color-primary-300: #b0c2c2;
+  --color-primary-400: #8aa5a5;
+  --color-primary-500: #6c8787;
+  --color-primary-600: #506a6a;
+  --color-primary-700: #354e4e;
+  --color-primary-800: #1b3333;
+  --color-primary-900: #0f2727;
+  --color-primary-950: #041b1b;
+
+  /* Accent Colors */
+  --color-accent-50: #fff4f8;
+  --color-accent-100: #ffe5ef;
+  --color-accent-200: #fccee0;
+  --color-accent-300: #eda1c1;
+  --color-accent-400: #d976a3;
+  --color-accent-500: #b55e75;
+  --color-accent-600: #954059;
+  --color-accent-700: #75223e;
+  --color-accent-800: #510b26;
+  --color-accent-900: #3e071b;
+  --color-accent-950: #2b0311;
+
+  /* Neutral Colors */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f8f8f8;
+  --color-neutral-100: #eeeeee;
+  --color-neutral-200: #dedede;
+  --color-neutral-300: #bebebe;
+  --color-neutral-400: #9e9e9e;
+  --color-neutral-500: #808080;
+  --color-neutral-600: #6f6f6f;
+  --color-neutral-900: #262626;
+  --color-neutral-950: #121212;
+  --color-neutral-1000: #000000;
+
+  /* Warning Colors */
+  --color-warning-500: #f3b200;
+
+  /* Semantic Color Aliases */
+  --color-text: var(--color-neutral-1000);
+  --color-text-inverse: var(--color-neutral-0);
+  --color-background: var(--color-neutral-0);
+  --color-border: var(--color-neutral-1000);
+  --color-foreground: var(--color-neutral-0);
+
+  /* ============================================
+     TYPOGRAPHY TOKENS
+     ============================================ */
+
+  /* Font Families */
+  --font-stack-sans: 'Stack Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-stack-sans-notch: 'Stack Sans Notch', 'Stack Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Font Sizes - Core Scale */
+  --font-size-core-600-md: 12px;
+  --font-size-core-700-md: 16px;
+  --font-size-core-800-sm: 20px;
+  --font-size-core-800-md: 24px;
+  --font-size-core-800-lg: 28px;
+  --font-size-core-900-md: 36px;
+  --font-size-core-1000-sm: 48px;
+  --font-size-core-1000-md: 52px;
+  --font-size-core-1000-lg: 60px;
+
+  /* Font Sizes - Text Scale */
+  --font-size-text-tiny: 12px;
+  --font-size-text-small: 14px;
+  --font-size-text-regular: 16px;
+  --font-size-text-medium: 18px;
+
+  /* Font Sizes - Heading Scale */
+  --font-size-heading-6: 20px;
+  --font-size-heading-5: 24px;
+  --font-size-heading-4: 28px;
+  --font-size-heading-3: 36px;
+  --font-size-heading-2: 48px;
+  --font-size-heading-1: 56px;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-core-600-md: 18px;
+  --line-height-core-700-md: 16px;
+  --line-height-core-700-lg: 18px;
+  --line-height-core-800-sm: 20px;
+  --line-height-core-800-md: 24px;
+  --line-height-core-800-lg: 28px;
+  --line-height-core-900-md: 36px;
+  --line-height-core-1000-sm: 48px;
+  --line-height-core-1000-lg: 60px;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.4;
+
+  /* Letter Spacing */
+  --letter-spacing-core-100-md: 1px;
+  --letter-spacing-normal: 0;
+  --letter-spacing-tight: -0.02em;
+
+  /* Typography Styles - Body */
+  --typography-body-sm: var(--font-weight-light) var(--font-size-core-600-md)/var(--line-height-core-700-lg) var(--font-stack-sans);
+  --typography-body-md: var(--font-weight-light) var(--font-size-core-700-md)/var(--line-height-core-800-md) var(--font-stack-sans);
+  --typography-body-lg: var(--font-weight-light) var(--font-size-core-800-sm)/var(--line-height-core-800-lg) var(--font-stack-sans);
+
+  /* Typography Styles - Headings */
+  --typography-h1: var(--font-weight-regular) var(--font-size-core-1000-lg)/var(--line-height-core-1000-lg) var(--font-stack-sans-notch);
+  --typography-h2: var(--font-weight-regular) var(--font-size-core-1000-sm)/var(--line-height-core-1000-sm) var(--font-stack-sans-notch);
+  --typography-h3: var(--font-weight-regular) var(--font-size-core-900-md)/var(--line-height-core-900-md) var(--font-stack-sans-notch);
+  --typography-h4: var(--font-weight-regular) var(--font-size-core-800-lg)/var(--line-height-core-800-lg) var(--font-stack-sans-notch);
+  --typography-h5: var(--font-weight-regular) var(--font-size-core-800-sm)/var(--line-height-core-800-sm) var(--font-stack-sans-notch);
+  --typography-h6: var(--font-weight-regular) var(--font-size-core-700-md)/var(--line-height-core-700-md) var(--font-stack-sans-notch);
+
+  /* Typography Styles - Links */
+  --typography-link: var(--font-weight-medium) var(--font-size-core-700-md)/var(--line-height-core-800-md) var(--font-stack-sans);
+  --typography-link-letter-spacing: var(--letter-spacing-core-100-md);
+
+  /* Typography Styles - Buttons */
+  --typography-button: var(--font-weight-medium) var(--font-size-core-700-md)/var(--line-height-core-800-md) var(--font-stack-sans-notch);
+  --typography-button-letter-spacing: var(--letter-spacing-core-100-md);
+
+
+  /* ============================================
+     SPACING TOKENS
+     ============================================ */
+
+  /* Core Spacing Scale */
+  --spacing-core-100-md: 1px;
+  --spacing-core-300-md: 4px;
+  --spacing-core-500-md: 8px;
+  --spacing-core-600-md: 12px;
+  --spacing-core-700-md: 16px;
+  --spacing-core-800-sm: 20px;
+  --spacing-core-800-md: 24px;
+  --spacing-core-800-lg: 28px;
+  --spacing-core-900-md: 36px;
+  --spacing-core-1000-sm: 48px;
+  --spacing-core-1000-md: 52px;
+  --spacing-core-1000-lg: 60px;
+  --spacing-core-1100-md: 72px;
+  --spacing-core-1200-sm: 84px;
+  --spacing-core-1200-md: 96px;
+  --spacing-core-1300-md: 128px;
+  --spacing-core-1300-lg: 144px;
+  --spacing-core-1400-md: 192px;
+  --spacing-core-1400-lg: 216px;
+  --spacing-core-1500-sm: 252px;
+  --spacing-core-1500-md: 288px;
+  --spacing-core-1500-lg: 324px;
+  --spacing-core-1600-sm: 364px;
+  --spacing-core-1600-md: 416px;
+  --spacing-core-1700-md: 640px;
+  --spacing-core-1700-lg: 720px;
+  --spacing-core-1800-sm: 840px;
+  --spacing-core-1800-md: 960px;
+  --spacing-core-1900-md: 1440px;
+
+  /* Semantic Spacing */
+  --spacing-section-medium: 80px;
+  --spacing-section-large: 112px;
+  --spacing-page-padding: 64px;
+  --spacing-container-large: 1280px;
+
+  /* ============================================
+     LAYOUT TOKENS
+     ============================================ */
+
+  /* Container Widths */
+  --container-max-width-xsmall: 400px;
+  --container-max-width-small: 480px;
+  --container-max-width-large: 768px;
+  --container-max-width-xlarge: var(--spacing-container-large);
+
+  /* Breakpoints */
+  --breakpoint-mobile-max: 767px;
+  --breakpoint-tablet-min: 768px;
+  --breakpoint-tablet-max: 1023px;
+  --breakpoint-desktop-min: 1024px;
+
+  /* Border & Stroke */
+  --border-width-divider: 1px;
+  --border-width-default: 1px;
+  --border-radius-medium: 0;
+  --border-radius-large: 0;
+
+  /* ============================================
+     UTILITY CLASSES
+     ============================================ */
+
+  /* Color Utilities */
+  .text-primary { color: var(--color-primary-600); }
+  .text-accent { color: var(--color-accent-600); }
+  .text-neutral { color: var(--color-neutral-1000); }
+  .bg-primary { background-color: var(--color-primary-600); }
+  .bg-accent { background-color: var(--color-accent-600); }
+  .bg-neutral { background-color: var(--color-neutral-0); }
+
+  /* Container Utilities */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: var(--spacing-core-1900-md);
+    padding: 0 24px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .container--centered {
+    align-items: center;
+    text-align: center;
+  }
+
+  .container--full-width {
+    max-width: 100%;
+  }
+
+  /* Section Utilities */
+  .section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-core-1100-md) 0;
+  }
+
+}
+
+/* Section Variants */
+.section--compact {
+  padding: var(--spacing-core-900-md) 0;
+}
+
+/* Carousel Section - for sections with horizontal scrolling cards */
+.section--carousel {
+  overflow: visible;
+}
+
+.section--carousel .container {
+  gap: var(--spacing-core-900-md);
+  overflow: visible;
+  position: relative;
+}
+
+.section--carousel .section-text-block {
+  max-width: 640px;
+  padding: 0;
+}
+
+.section--carousel .container:has(.section-action) {
+  margin-top: var(--spacing-core-900-md);
+}
+
+.section--carousel .carousel {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.section--carousel .carousel-track {
+  display: flex;
+  text-align: left;
+  flex-shrink: 0;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section--carousel .carousel-track .card {
+  min-width: 364px;
+  max-width: 416px;
+}
+
+@media (max-width: 767px) {
+  .section--carousel .section-text-block {
+    max-width: 100%;
+  }
+  .section--carousel .carousel-track .card {
+    min-width: 300px;
+    max-width: 364px;
+  }
+}
+
+/* Basic Section - for simple sections with container gap and text block */
+.section--basic .container {
+  gap: var(--spacing-core-900-md);
+}
+
+.section--basic .section-text-block {
+  max-width: 640px;
+}
+
+@media (max-width: 767px) {
+  .section--basic .section-text-block {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: var(--spacing-core-900-md) 0;
+  }
+}
+
+/* ============================================
+   SECTION TEXT BLOCK UTILITIES
+   ============================================ */
+
+/* Common text block container for section headers */
+.section-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-core-700-md);
+  max-width: 640px;
+}
+
+/* Section title - h2 on desktop, h3 on mobile */
+.section-title {
+  font: var(--typography-h2);
+  color: var(--color-primary-900);
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font: var(--typography-h3);
+  }
+}
+
+/* Section description - body-lg styling */
+.section-description {
+  font: var(--typography-body-lg);
+  color: var(--color-primary-600);
+  margin: 0;
+}
+
+/* ============================================
+   CAROUSEL UTILITIES
+   ============================================ */
+
+/* Carousel wrapper - handles overflow and scrolling */
+.carousel-wrapper {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+/* Carousel container - horizontal scrolling */
+.carousel {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Carousel track - flex container for items */
+.carousel-track {
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--spacing-core-800-md);
+  padding: var(--spacing-core-800-md);
+  width: max-content;
+  overflow: visible;
+}
+
+@media (max-width: 767px) {
+  .carousel-track {
+    gap: var(--spacing-core-600-md);
+  }
+}
+
+/* ============================================
+   SECTION ACTION UTILITIES
+   ============================================ */
+
+/* Section action buttons container */
+.section-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* ============================================
+   BANNER SECTION UTILITIES
+   ============================================ */
+
+/* Banner section - common banner structure */
+.banner-section {
+  position: relative;
+  height: 416px;
+}
+
+/* Banner background - image container */
+.banner-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.banner-bg-fallback {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-neutral-300);
+}
+
+.banner-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Banner overlay */
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-primary-50);
+  opacity: 0.72;
+}
+
+/* Banner inner container */
+.banner-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Banner text container */
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-core-700-md);
+  max-width: var(--spacing-core-1700-md);
+  width: 100%;
+}
+
+/* Banner title */
+.banner-title {
+  font: var(--typography-h2);
+  color: var(--color-primary-900);
+  margin: 0;
+  line-height: var(--line-height-core-1000-sm);
+}
+
+/* Banner description */
+.banner-description {
+  font: var(--typography-body-lg);
+  color: var(--color-primary-900);
+  margin: 0;
+  line-height: var(--line-height-core-800-lg);
+  font-weight: var(--font-weight-light);
+}
+
+/* Banner actions */
+.banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-core-800-md);
+  align-items: flex-end;
+  width: 100%;
+}
+
+/* ============================================
+   NAVIGATION LINK UTILITIES
+   ============================================ */
+
+/* Navigation link - used in Header and Footer */
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-core-600-md);
+  height: 48px;
+  padding: var(--spacing-core-600-md) 0;
+  font: var(--typography-link);
+  color: var(--color-primary-600);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-core-100-md);
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Active navigation link */
+.nav-link--active {
+  color: var(--color-primary-900);
+  cursor: default;
+  pointer-events: none;
+}
+
+.nav-link--active:hover,
+.nav-link--active:active,
+.nav-link--active:focus {
+  text-decoration: none;
+  color: var(--color-primary-900);
+}
+
+/* ============================================
+   NOTE: Typography component classes and utilities are defined in typography.css
+   ============================================ */
+

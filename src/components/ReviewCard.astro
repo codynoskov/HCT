@@ -1,0 +1,114 @@
+---
+interface Props {
+  rating?: number;
+  text: string;
+  author: string;
+  className?: string;
+}
+
+const { 
+  rating = 5, 
+  text, 
+  author,
+  className = "" 
+} = Astro.props;
+
+const stars = Array.from({ length: rating }, (_, i) => i);
+// Split text by line breaks to handle multi-paragraph content
+const textParagraphs = text.split('\n').filter(p => p.trim());
+---
+
+<article class={`review-card ${className}`}>
+  <div class="review-content">
+    <div class="review-stars">
+      {stars.map(() => (
+        <span class="review-star">★</span>
+      ))}
+    </div>
+    <h5 class="review-author">{author}</h5>
+    <div class="review-text">
+      {textParagraphs.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--color-neutral-50);
+    border: var(--border-width-default) solid var(--color-neutral-100);
+    width: 100%;
+    max-width: var(--spacing-core-1500-lg);
+    min-width: var(--spacing-core-1500-lg);
+    min-height: 0;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .review-card {
+      max-width: var(--spacing-core-1600-sm);
+      min-width: var(--spacing-core-1600-sm);
+    }
+  }
+
+  .review-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    align-items: flex-start;
+    padding: var(--spacing-core-800-md);
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    box-sizing: border-box;
+  }
+
+  .review-stars {
+    display: flex;
+    gap: var(--spacing-core-300-md);
+    align-items: center;
+    width: 136px;
+    height: 24px;
+    color: var(--color-warning-500);
+    flex-shrink: 0;
+  }
+
+  .review-star {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .review-author {
+    font: var(--typography-h5);
+    color: var(--color-primary-600);
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .review-text {
+    font: var(--typography-body-md);
+    color: var(--color-primary-600);
+    width: 100%;
+    text-align: left;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .review-text p {
+    margin: 0;
+    line-height: var(--line-height-core-800-md);
+    text-align: left;
+  }
+
+  .review-text p:not(:last-child) {
+    margin-bottom: 0;
+  }
+</style>

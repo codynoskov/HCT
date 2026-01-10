@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DesignSystemNav from '../../components/DesignSystemNav.astro';
+import Icon from '../../components/Icon.astro';
+import { iconNames } from '../../utils/iconRegistry';
+---
+
+<Layout>
+  <div class="design-system">
+    <header class="design-system-header">
+      <h1>Design System</h1>
+      <p class="body-lg">A comprehensive overview of design tokens, typography, icons, and components</p>
+    </header>
+
+    <DesignSystemNav />
+
+    <main class="design-system-content">
+      <div class="subsection">
+        <h2>Pixelarticons Icon Set</h2>
+        <p class="body-md" style="margin-bottom: var(--spacing-core-800-md);">
+          A comprehensive collection of {iconNames.length} pixel-art style icons. All icons use <code>currentColor</code> for easy customization.
+        </p>
+        
+        <div class="icon-search-container" style="margin-bottom: var(--spacing-core-800-md);">
+          <input 
+            type="text" 
+            id="icon-search" 
+            placeholder="Search icons..." 
+            class="icon-search-input"
+          />
+        </div>
+
+        <div class="icon-grid" id="icon-grid">
+          {iconNames.map((iconName) => (
+            <div class="icon-item" data-icon-name={iconName}>
+              <div class="icon-preview">
+                <Icon name={iconName} size={32} />
+              </div>
+              <div class="icon-info">
+                <code class="icon-name">{iconName}</code>
+                <div class="icon-usage">
+                  <code>&lt;Icon name="{iconName}" /&gt;</code>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  // Icon search functionality
+  const searchInput = document.getElementById('icon-search');
+  const iconGrid = document.getElementById('icon-grid');
+  
+  if (searchInput && iconGrid) {
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const iconItems = iconGrid.querySelectorAll('.icon-item');
+      
+      iconItems.forEach((item) => {
+        const iconName = item.getAttribute('data-icon-name')?.toLowerCase() || '';
+        if (iconName.includes(searchTerm)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .design-system {
+    max-width: var(--container-max-width-xlarge);
+    margin: 0 auto;
+    padding: var(--spacing-core-1000-md) var(--spacing-page-padding);
+    overflow: hidden;
+  }
+
+  .design-system-header {
+    margin-bottom: var(--spacing-core-1000-md);
+    text-align: center;
+  }
+
+  .design-system-header h1 {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .design-system-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section-large);
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-1000-md);
+    margin-bottom: var(--spacing-core-1000-md);
+  }
+
+  .subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .subsection h2 {
+    border-bottom: var(--border-width-divider) solid var(--color-border);
+    padding-bottom: var(--spacing-core-700-md);
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  /* Icon Search */
+  .icon-search-container {
+    margin-bottom: var(--spacing-core-800-md);
+  }
+
+  .icon-search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--spacing-core-600-md) var(--spacing-core-700-md);
+    font: var(--typography-body-md);
+    border: var(--border-width-divider) solid var(--color-neutral-200);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-radius: 4px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .icon-search-input:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 2px var(--color-primary-200);
+  }
+
+  /* Icon Grid */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-core-700-md);
+  }
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-core-800-md);
+    border: var(--border-width-divider) solid var(--color-neutral-200);
+    background-color: var(--color-background);
+    border-radius: 4px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .icon-item:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .icon-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--spacing-core-700-md);
+    color: var(--color-text);
+    background-color: var(--color-neutral-50);
+    border-radius: 4px;
+  }
+
+  .icon-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-core-500-md);
+    width: 100%;
+    text-align: center;
+  }
+
+  .icon-name {
+    font-family: monospace;
+    font-size: var(--font-size-text-small);
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+    word-break: break-word;
+  }
+
+  .icon-usage {
+    font-size: var(--font-size-text-tiny);
+  }
+
+  .icon-usage code {
+    font-family: monospace;
+    font-size: var(--font-size-text-tiny);
+    color: var(--color-neutral-600);
+    background-color: var(--color-neutral-50);
+    padding: var(--spacing-core-300-md) var(--spacing-core-500-md);
+    border-radius: 2px;
+    word-break: break-all;
+  }
+
+  @media (max-width: 768px) {
+    .design-system {
+      padding: var(--spacing-core-800-md) var(--spacing-core-700-md);
+    }
+
+    .design-system-header {
+      margin-bottom: var(--spacing-core-800-md);
+    }
+
+    .icon-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--spacing-core-600-md);
+    }
+
+    .icon-item {
+      padding: var(--spacing-core-600-md);
+    }
+
+    .icon-preview {
+      width: 48px;
+      height: 48px;
+    }
+  }
+</style>

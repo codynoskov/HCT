@@ -1,0 +1,293 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Divider from '../components/Divider.astro';
+import ArtistsHeroSection from '../components/sections/ArtistsHeroSection.astro';
+import InputField from '../components/InputField.astro';
+import Checkbox from '../components/Checkbox.astro';
+import Button from '../components/Button.astro';
+import { styles } from '../data/styles';
+import { artists } from '../data/artists';
+---
+
+<Layout>
+  <Header />
+  <main>
+    <ArtistsHeroSection 
+      title="Book an appointment"
+      description="Book an appointment to discuss your idea, placement, and details, and secure your session."
+    />
+
+    <Divider />
+
+    <!-- Form Section -->
+    <section class="form-section">
+      <div class="form-container">
+        <form class="booking-form" id="booking-form">
+          <div class="form-grid">
+            <!-- Row 1: Name & Email -->
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="Name"
+                name="name"
+                id="name"
+                mandatoryField={true}
+                optionalHint={false}
+              />
+            </div>
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="Email"
+                name="email"
+                id="email"
+                mandatoryField={true}
+                optionalHint={false}
+              />
+            </div>
+
+            <!-- Row 2: City & Phone -->
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="City (optional)"
+                name="city"
+                id="city"
+                mandatoryField={false}
+                optionalHint={false}
+              />
+            </div>
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="Phone number (optional)"
+                name="phone"
+                id="phone"
+                mandatoryField={false}
+                optionalHint={false}
+              />
+            </div>
+
+            <!-- Row 3: Style & Preferred Artist -->
+            <div class="form-field">
+              <InputField
+                type="Dropdown"
+                label="Style"
+                name="style"
+                id="style"
+                placeholder="Choose a style"
+                mandatoryField={true}
+                optionalHint={true}
+              >
+                {styles.map((style) => (
+                  <option value={style.slug}>{style.name}</option>
+                ))}
+              </InputField>
+            </div>
+            <div class="form-field">
+              <InputField
+                type="Dropdown"
+                label="Preferred artist (optional)"
+                name="artist"
+                id="artist"
+                placeholder="Choose an artist"
+                mandatoryField={false}
+                optionalHint={true}
+              >
+                {artists.map((artist) => (
+                  <option value={artist.slug}>{artist.name}</option>
+                ))}
+              </InputField>
+            </div>
+
+            <!-- Row 4: Body Placement & Size -->
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="Body placement"
+                name="placement"
+                id="placement"
+                placeholder="Example: forearm, upper arm, shoulder, ribs, thigh, etc."
+                mandatoryField={true}
+                optionalHint={true}
+              />
+            </div>
+            <div class="form-field">
+              <InputField
+                type="Field"
+                label="Approx. size (cm)"
+                name="size"
+                id="size"
+                mandatoryField={true}
+                optionalHint={false}
+              />
+            </div>
+
+            <!-- Row 5: Tattoo Description (full width) -->
+            <div class="form-field form-field-full">
+              <InputField
+                type="Area"
+                label="Tattoo description"
+                name="description"
+                id="description"
+                placeholder="Optional hint"
+                mandatoryField={false}
+                optionalHint={true}
+              />
+            </div>
+
+            <!-- Row 6: Age Confirmation Checkbox (full width) -->
+            <div class="form-field form-field-full">
+              <div class="checkbox-group">
+                <Checkbox state="Empty" name="age-confirmation" />
+                <div class="checkbox-label-group">
+                  <span class="mandatory-indicator">*</span>
+                  <span class="checkbox-label">I am at least 18 years old</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions">
+            <Button
+              type="Primary"
+              color="Accent"
+              leadingIcon={false}
+              trailingIcon={true}
+              trailingIconName="check"
+            >
+              Book Session now
+            </Button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <Divider />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-top: 72px; /* Account for fixed header height */
+  }
+
+  /* Form Section */
+  .form-section {
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--color-neutral-0);
+    padding: var(--spacing-core-1100-md) 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .form-container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-core-800-md);
+    box-sizing: border-box;
+  }
+
+  .booking-form {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    box-sizing: border-box;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-core-900-md);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .form-field-full {
+    grid-column: 1 / -1;
+  }
+
+  /* Checkbox Group */
+  .checkbox-group {
+    display: flex;
+    gap: var(--spacing-core-700-md);
+    align-items: center;
+    padding: var(--spacing-core-600-md) var(--spacing-core-700-md);
+    background-color: var(--color-neutral-0);
+    border: 1px solid var(--color-primary-600);
+  }
+
+  .checkbox-label-group {
+    display: flex;
+    gap: var(--spacing-core-300-md);
+    align-items: center;
+    flex: 1;
+    font: var(--typography-body-lg);
+  }
+
+  .mandatory-indicator {
+    color: var(--color-accent-600);
+  }
+
+  .checkbox-label {
+    color: var(--color-primary-900);
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-core-800-md);
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding-top: var(--spacing-core-900-md);
+    width: 100%;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 767px) {
+    main {
+      padding-top: 64px;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-core-800-md);
+    }
+
+    .form-field-full {
+      grid-column: 1;
+    }
+
+    .form-section {
+      padding: var(--spacing-core-900-md) 0;
+    }
+
+    .form-container {
+      padding: 0 var(--spacing-core-600-md);
+    }
+  }
+</style>

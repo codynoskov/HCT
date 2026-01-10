@@ -1,0 +1,59 @@
+---
+import Gallery from '../Gallery.astro';
+import placeholderImage from '../../assets/images/placeholder.png';
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  tags?: Array<{
+    text: string;
+    color?: "Primary" | "Accent" | "Neutral";
+  }>;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  images?: GalleryImage[];
+  maxVisible?: number;
+  className?: string;
+}
+
+const {
+  title = "Inside the studio",
+  description = "Step into our creative space in the heart of Friedrichshain. Our studio is designed for comfort and inspiration, where art comes to life on skin.",
+  images = [
+    { src: placeholderImage.src, alt: "Studio interior 1" },
+    { src: placeholderImage.src, alt: "Studio interior 2" },
+    { src: placeholderImage.src, alt: "Studio interior 3" },
+    { src: placeholderImage.src, alt: "Studio interior 4" },
+    { src: placeholderImage.src, alt: "Studio interior 5" },
+    { src: placeholderImage.src, alt: "Studio interior 6" },
+    { src: placeholderImage.src, alt: "Studio interior 7" },
+    { src: placeholderImage.src, alt: "Studio interior 8" },
+    { src: placeholderImage.src, alt: "Studio interior 9" }
+  ],
+  maxVisible = 6,
+  className = ""
+} = Astro.props;
+---
+
+<section class={`section section--basic ${className}`}>
+  <div class="container">
+    <div class="section-text-block">
+      <h2 class="section-title">{title}</h2>
+      <p class="section-description">{description}</p>
+    </div>
+    
+    <div class="studio-gallery">
+      <Gallery images={images} maxVisible={maxVisible} />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Common section styles handled by .section--basic in tokens.css */
+  .studio-gallery {
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,179 @@
+---
+import Gallery from '../Gallery.astro';
+import Button from '../Button.astro';
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  tags?: Array<{
+    text: string;
+    color?: "Primary" | "Accent" | "Neutral";
+  }>;
+}
+
+interface ContentBlock {
+  title: string;
+  paragraphs: string[];
+  gallery?: GalleryImage[];
+}
+
+interface Props {
+  galleryImages?: GalleryImage[];
+  contentBlocks?: ContentBlock[];
+  showBackLink?: boolean;
+  className?: string;
+}
+
+const {
+  galleryImages = [],
+  contentBlocks = [],
+  showBackLink = true,
+  className = ""
+} = Astro.props;
+---
+
+<section class={`artist-content-section ${className}`}>
+  <div class="container">
+    <!-- Main Gallery -->
+    {galleryImages.length > 0 && (
+      <div class="main-gallery-wrapper">
+        <Gallery images={galleryImages} maxVisible={9} />
+      </div>
+    )}
+
+    <!-- Content Blocks -->
+    {contentBlocks.map((block) => (
+      <div class="content-block">
+        <div class="text-content">
+          <h2 class="block-title">{block.title}</h2>
+          {block.paragraphs.map((paragraph) => (
+            <p class="block-paragraph">{paragraph}</p>
+          ))}
+        </div>
+        
+        {block.gallery && block.gallery.length > 0 && (
+          <div class="block-gallery-wrapper">
+            <Gallery images={block.gallery} maxVisible={6} />
+          </div>
+        )}
+      </div>
+    ))}
+
+    <!-- Back Link -->
+    {showBackLink && (
+      <div class="back-link-wrapper">
+        <Button
+          type="Secondary"
+          color="Primary"
+          href="/artists"
+          leadingIcon={true}
+          leadingIconName="chevron-left"
+          trailingIcon={false}
+        >
+          Explore all artists
+        </Button>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .artist-content-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    padding: var(--spacing-core-1100-md) 0;
+    /* Overlap with hero section by -144px */
+    margin-top: calc(-1 * var(--spacing-core-1300-lg));
+    position: relative;
+    z-index: 1;
+  }
+
+  .artist-content-section :global(.container) {
+    gap: var(--spacing-core-1100-md);
+  }
+
+  /* Main Gallery */
+  .main-gallery-wrapper {
+    width: 100%;
+  }
+
+  /* Content Blocks */
+  .content-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-900-md);
+    width: 100%;
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-core-700-md);
+    max-width: 640px;
+  }
+
+  .block-title {
+    font: var(--typography-h2);
+    color: var(--color-primary-900);
+    margin: 0;
+  }
+
+  .block-paragraph {
+    font: var(--typography-body-lg);
+    color: var(--color-primary-600);
+    margin: 0;
+    font-weight: var(--font-weight-light);
+  }
+
+  .block-gallery-wrapper {
+    width: 100%;
+  }
+
+  /* Back Link */
+  .back-link-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding-top: var(--spacing-core-700-md);
+  }
+
+  /* Override the chevron-left icon rotation in the secondary button */
+  .back-link-wrapper :global(.icon-leading .icon svg) {
+    transform: rotate(-90deg) scaleY(-1);
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 767px) {
+    .artist-content-section {
+      padding: var(--spacing-core-900-md) 0;
+    }
+
+    .artist-content-section :global(.container) {
+      gap: var(--spacing-core-900-md);
+    }
+
+    .content-block {
+      gap: var(--spacing-core-700-md);
+    }
+
+    .text-content {
+      gap: var(--spacing-core-600-md);
+    }
+
+    .block-title {
+      font: var(--typography-h3);
+    }
+
+    .block-paragraph {
+      font: var(--typography-body-md);
+    }
+
+    .back-link-wrapper {
+      padding-top: var(--spacing-core-500-md);
+    }
+  }
+</style>
