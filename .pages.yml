@@ -70,7 +70,7 @@ content:
         label: Works Gallery
         type: list
         options:
-          label: "Work #{_index}"
+          label: "{image}"
         fields:
           - name: image
             label: Image
