@@ -70,15 +70,13 @@ content:
         type: text
         required: true
       - name: styles
+        label: Styles
         type: reference
         options:
           collection: styles
           multiple: true
           value: "{id}"
           label: "{name}"
-          displayField: name
-        ui:
-          listLabel: "{name}"
       - name: details
         type: rich-text
 
@@ -90,7 +88,7 @@ content:
     create: true
     delete: true
     view:
-      fields: [image, styles, artist]
+      fields: [image, styles]
       primary: image
     fields:
       - name: id
