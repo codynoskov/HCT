@@ -17,6 +17,7 @@ content:
     view:
       fields: [name, order, intro, details, cover]
       primary: name
+      displayField: name
     fields:
       - name: id
         type: uuid
@@ -49,6 +50,7 @@ content:
     view:
       fields: [name, photo, intro, styles, details]
       primary: name
+      displayField: name
     fields:
       - name: id
         type: uuid
@@ -74,6 +76,7 @@ content:
           multiple: true
           value: "{id}"
           label: "{name}"
+          displayField: name
         ui:
           listLabel: "{name}"
       - name: details
