@@ -13,10 +13,11 @@ const styleEntries = await getCollection('styles');
 const works = await getCollection('works');
 
 const artists = artistEntries.map(entry => {
-  const artistWorks = getWorksByArtist(entry.data.name, works);
+  const artistSlug = getSlug(entry);
+  const artistWorks = getWorksByArtist(artistSlug, works);
   return {
     name: entry.data.name,
-    slug: getSlug(entry),
+    slug: artistSlug,
     intro: entry.data.intro,
     photo: entry.data.photo,
     styles: resolveStyleNames(entry.data.styles, styleEntries),

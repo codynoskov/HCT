@@ -28,21 +28,22 @@ export function getSlug(entry: { slug: string; data: { slugOverride?: string; na
 
 /**
  * Find artists that work in a given style.
- * Matches by checking if the style name is in the artist's styles array
+ * Matches by checking if the style slug is in the artist's styles array
  * OR if any of their works are tagged with this style.
  */
 export function getRelatedArtists(
-  styleName: string,
+  styleSlug: string,
   artists: ArtistEntry[],
   works: WorkEntry[]
 ): Artist[] {
   return artists
     .filter((artist) => {
-      // Check if artist has this style in their styles array
-      const hasStyle = artist.data.styles.includes(styleName);
+      // Check if artist has this style in their styles array (stored as slug)
+      const hasStyle = artist.data.styles.includes(styleSlug);
       // Check if any of their works are tagged with this style
+      const artistSlug = getSlug(artist);
       const hasTaggedWork = works.some(
-        (work) => work.data.artist === artist.data.name && work.data.styles.includes(styleName)
+        (work) => work.data.artist === artistSlug && work.data.styles.includes(styleSlug)
       );
       return hasStyle || hasTaggedWork;
     })
@@ -57,16 +58,19 @@ export function getRelatedArtists(
  * Falls back to the style's cover image if no tagged works exist.
  */
 export function getStyleGalleryImages(
-  styleName: string,
+  styleSlug: string,
   works: WorkEntry[],
   artists: ArtistEntry[],
+  styleName: string,
   fallbackCover?: string
 ): GalleryImage[] {
   const images: GalleryImage[] = [];
+  const artistSlugToName = new Map(artists.map((a) => [getSlug(a), a.data.name]));
 
   for (const work of works) {
-    if (work.data.styles.includes(styleName)) {
-      const artistName = work.data.artist;
+    if (work.data.styles.includes(styleSlug)) {
+      const artistSlug = work.data.artist;
+      const artistName = artistSlugToName.get(artistSlug) || artistSlug;
       images.push({
         src: work.data.image,
         alt: `${styleName} tattoo by ${artistName}`,
@@ -88,22 +92,24 @@ export function getStyleGalleryImages(
 }
 
 /**
- * Resolve style names (already names, just validate they exist).
- * Returns an array of style names that exist in the styles collection.
+ * Resolve style slugs to their display names.
+ * Returns an array of style names for the given slugs.
  */
-export function resolveStyleNames(styleNames: string[], styles: StyleEntry[]): string[] {
-  const validStyleNames = new Set(styles.map((s) => s.data.name));
-  return styleNames.filter((name) => validStyleNames.has(name));
+export function resolveStyleNames(styleSlugs: string[], styles: StyleEntry[]): string[] {
+  const slugToName = new Map(styles.map((s) => [getSlug(s), s.data.name]));
+  return styleSlugs
+    .map((slug) => slugToName.get(slug))
+    .filter((name): name is string => name !== undefined);
 }
 
 /**
- * Resolve style names to style objects with name and href.
+ * Resolve style slugs to style objects with name and href.
  */
-export function resolveStyles(styleNames: string[], styles: StyleEntry[]): Array<{ name: string; href: string }> {
-  const styleMap = new Map(styles.map((s) => [s.data.name, s]));
-  return styleNames
-    .map((name) => {
-      const style = styleMap.get(name);
+export function resolveStyles(styleSlugs: string[], styles: StyleEntry[]): Array<{ name: string; href: string }> {
+  const styleMap = new Map(styles.map((s) => [getSlug(s), s]));
+  return styleSlugs
+    .map((slug) => {
+      const style = styleMap.get(slug);
       if (!style) return null;
       return {
         name: style.data.name,
@@ -136,8 +142,8 @@ export function worksToGalleryImages(
 }
 
 /**
- * Get works by artist name.
+ * Get works by artist slug.
  */
-export function getWorksByArtist(artistName: string, works: WorkEntry[]): WorkEntry[] {
-  return works.filter((work) => work.data.artist === artistName);
+export function getWorksByArtist(artistSlug: string, works: WorkEntry[]): WorkEntry[] {
+  return works.filter((work) => work.data.artist === artistSlug);
 }

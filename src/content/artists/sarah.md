@@ -3,8 +3,8 @@ name: Sarah
 photo: /images/artist-placeholder.png
 intro: Berlin-based beginner artist focusing on blackwork traditional.
 styles:
-  - Linework
-  - Blackwork
+  - linework
+  - blackwork
 details: |
   Client comfort and transparency first.
 

@@ -19,13 +19,16 @@ const sortedStyles = [...styleEntries].sort((a, b) => {
   return orderA - orderB;
 });
 
-const styles = sortedStyles.map(entry => ({
-  name: entry.data.name,
-  slug: getSlug(entry),
-  intro: entry.data.intro,
-  artists: getRelatedArtists(entry.data.name, artistEntries, works),
-  galleryImages: getStyleGalleryImages(entry.data.name, works, artistEntries, entry.data.cover),
-}));
+const styles = sortedStyles.map(entry => {
+  const slug = getSlug(entry);
+  return {
+    name: entry.data.name,
+    slug: slug,
+    intro: entry.data.intro,
+    artists: getRelatedArtists(slug, artistEntries, works),
+    galleryImages: getStyleGalleryImages(slug, works, artistEntries, entry.data.name, entry.data.cover),
+  };
+});
 ---
 
 <Layout>

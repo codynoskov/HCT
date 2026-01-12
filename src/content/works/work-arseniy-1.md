@@ -1,5 +1,5 @@
 ---
 image: /images/placeholder.png
 styles: []
-artist: Arseniy
+artist: arseniy
 ---

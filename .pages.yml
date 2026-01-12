@@ -67,7 +67,7 @@ content:
         options:
           collection: styles
           multiple: true
-          value: "{name}"
+          value: "{slug}"
           label: "{name}"
       - name: details
         type: rich-text
@@ -93,7 +93,7 @@ content:
         options:
           collection: styles
           multiple: true
-          value: "{name}"
+          value: "{slug}"
           label: "{name}"
       - name: artist
         label: Artist
@@ -101,5 +101,5 @@ content:
         options:
           collection: artists
           multiple: false
-          value: "{name}"
+          value: "{slug}"
           label: "{name}"
