@@ -6,22 +6,20 @@ import Divider from '../components/Divider.astro';
 import ArtistsHeroSection from '../components/sections/ArtistsHeroSection.astro';
 import ArtistDetailSection from '../components/sections/ArtistDetailSection.astro';
 import { getCollection } from 'astro:content';
-import { getSlug, resolveStyleNames, worksToGalleryImages, getWorksByArtist } from '../utils/contentHelpers';
+import { getSlug, resolveStyleNames } from '../utils/contentHelpers';
 
 const artistEntries = await getCollection('artists');
 const styleEntries = await getCollection('styles');
-const works = await getCollection('works');
 
 const artists = artistEntries.map(entry => {
   const artistSlug = getSlug(entry);
-  const artistWorks = getWorksByArtist(artistSlug, works);
   return {
     name: entry.data.name,
     slug: artistSlug,
     intro: entry.data.intro,
     photo: entry.data.photo,
     styles: resolveStyleNames(entry.data.styles, styleEntries),
-    galleryImages: worksToGalleryImages(artistWorks, entry.data.name, styleEntries),
+    galleryImages: [],
   };
 });
 ---

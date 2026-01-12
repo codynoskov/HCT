@@ -24,13 +24,4 @@ export const collections = {
       details: z.string().optional(),
     }),
   }),
-
-  works: defineCollection({
-    type: 'content',
-    schema: z.object({
-      image: z.string(),
-      styles: z.array(z.string()),
-      artist: z.string(),
-    }),
-  }),
 };
