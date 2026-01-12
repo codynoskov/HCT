@@ -14,6 +14,7 @@ content:
     extension: md
     create: true
     delete: true
+    identifier: name
     primary: name
     view:
       fields: [name, order, intro, details, cover]
@@ -42,6 +43,7 @@ content:
     extension: md
     create: true
     delete: true
+    identifier: name
     primary: name
     view:
       fields: [name, photo, intro, details]
