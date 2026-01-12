@@ -14,8 +14,6 @@ content:
     extension: md
     create: true
     delete: true
-    identifier: name
-    primary: name
     view:
       fields: [name, order, intro, details, cover]
       primary: name
@@ -67,7 +65,6 @@ content:
         options:
           collection: styles
           multiple: true
-          search: "name"
           value: "{slug}"
           label: "{name}"
       - name: details
@@ -94,7 +91,6 @@ content:
         options:
           collection: styles
           multiple: true
-          search: "name"
           value: "{slug}"
           label: "{name}"
       - name: artist
