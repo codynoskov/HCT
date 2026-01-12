@@ -45,19 +45,7 @@ const stylesCollection = defineCollection({
   })
 });
 
-const blogCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    layout: z.string().optional(),
-    title: z.string(),
-    date: z.date(),
-    thumbnail: z.string().optional(),
-    rating: z.number().optional()
-  })
-});
-
 export const collections = {
   artists: artistsCollection,
-  styles: stylesCollection,
-  blog: blogCollection
+  styles: stylesCollection
 };
